@@ -4,9 +4,9 @@
   "main": "server.js",
   "repository": "git@github.com:Hackatrips2018/hackatrips2018.git",
   "scripts": {
-    "frontend-local": "cd frontend && yarn run local",
-    "local": "(yarn run frontend-local & yarn run server)",
-    "server": "yarn install && nodemon server.js"
+    "frontend": "cd frontend && yarn && yarn run local",
+    "local": "(yarn run frontend & yarn run server)",
+    "server": "yarn && nodemon server.js"
   },
   "license": "MIT",
   "dependencies": {
