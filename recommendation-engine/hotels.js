@@ -17,7 +17,7 @@ async function main () {
   // const basic = await basicSearch()
   // console.log(basic)
   const allHotels = await getAllHotels()
-  console.log(allHotels[0])
+  console.log(allHotels.length)
   // fs.writeJson('./example-all', allHotels)
   return {allHotels}
 }
