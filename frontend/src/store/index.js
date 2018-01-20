@@ -19,12 +19,15 @@ const state = {
     locationName: null,
     peopleCount: null,
     price: null,
-    startDate: null,
-    endDate: null,
+    startDate: new Date(),
+    endDate: new Date(),
     categories: {}
   },
   loading: false,
   step: POSSIBLE_STEPS.form,
+  poiClusters: null,
+  selectedPoiCluster: null,
+  highlightedPoiCluster: null,
   availableCategories: null
 }
 
@@ -54,12 +57,22 @@ const mutations = {
     state.step = POSSIBLE_STEPS.form
   },
 
-  MOVE_TO_POI_SELECTION_STEP (state, { pois }) {
+  MOVE_TO_POI_SELECTION_STEP (state, { poiClusters }) {
     state.step = POSSIBLE_STEPS.poiSelection
+    state.poiClusters = poiClusters
+    state.poiClusters = require('../assets/mocked-locations.json')
   },
 
   MOVE_TO_HOTEL_SELECTION_STEP (state) {
     state.step = POSSIBLE_STEPS.hotelSelection
+  },
+
+  SET_HIGHLIGHTED_POI_CLUTER (state, { poiCluster }) {
+    state.highlightedPoiCluster = poiCluster
+  },
+
+  REMOVE_HIGHLIGHTED_POI_CLUTER (state) {
+    state.highlightedPoiCluster = null
   }
 }
 
@@ -114,6 +127,21 @@ const actions = {
       city: state.searchSettings.locationName,
       categoriesIds
     })
+  },
+
+  PROCESS_FETCHED_POIS ({ commit }, poiClusters) {
+    commit('MOVE_TO_POI_SELECTION_STEP', { poiClusters })
+    commit('STOP_LOADING')
+  },
+
+  HIGHLIGHT_POI_CLUSTER ({ commit }, poiCluster) {
+    commit('SET_HIGHLIGHTED_POI_CLUTER', { poiCluster })
+  },
+
+  UNHIGHLIGHT_POI_CLUSTER ({ commit }, poiCluster) {
+    if (store.highlightedPoiCluster === poiCluster) {
+      commit('REMOVE_HIGHLIGHTED_POI_CLUTER')
+    }
   }
 }
 

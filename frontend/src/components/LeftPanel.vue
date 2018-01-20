@@ -29,6 +29,8 @@ export default {
 <style>
 
 #left-panel {
+  width: 520px;
+  max-height: calc(100vh - 20px);
   position: absolute;
   top: 10px;
   left: 10px;
@@ -39,6 +41,8 @@ export default {
 
   border-radius: 4px;
   box-shadow: 0px 2px 10px 1px rgba(0, 0, 0, .3);
+
+  overflow: scroll;
 }
 
 .leaflet-control-zoom {

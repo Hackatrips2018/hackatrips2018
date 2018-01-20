@@ -1,0 +1,120 @@
+[
+    {
+        "hotels": [
+            {
+                "address": "Ferran 7",
+                "distance": 219,
+                "highestRate": 377,
+                "href": "http://sandbox.hotelscombined.com/api/2.0/hotel?apiKey=36C1BFD4-233C-48F7-935D-E8F78CB24697&sessionID=1&destination=latlon%3A41.378737%2C2.1741&checkin=2018-11-03&checkout=2018-11-13&rooms=2&hotel=hotel:Aspasios_Plaza_Real_Apartments",
+                "id": 3208356,
+                "isGreatValue": true,
+                "isSelfRated": false,
+                "isWithinBoundary": false,
+                "key": "hotel:Aspasios_Plaza_Real_Apartments",
+                "latitude": 41.3806506,
+                "longitude": 2.1744964,
+                "lowestRate": 80,
+                "name": "Aspasios Plaza Real Apartments",
+                "numberOfProviders": 17,
+                "numberOfRates": 17,
+                "starRating": 3
+            },
+            {
+                "address": "Drassanes, 23-25",
+                "distance": 246,
+                "highestRate": 400,
+                "href": "http://sandbox.hotelscombined.com/api/2.0/hotel?apiKey=36C1BFD4-233C-48F7-935D-E8F78CB24697&sessionID=1&destination=latlon%3A41.378737%2C2.1741&checkin=2018-11-03&checkout=2018-11-13&rooms=2&hotel=hotel:Andante_Hotel_Barcelona",
+                "id": 1758481,
+                "isGreatValue": true,
+                "isSelfRated": false,
+                "isWithinBoundary": false,
+                "key": "hotel:Andante_Hotel_Barcelona",
+                "latitude": 41.3767121,
+                "longitude": 2.1728001,
+                "lowestRate": 79,
+                "name": "Andante Hotel Barcelona",
+                "numberOfProviders": 15,
+                "numberOfRates": 16,
+                "starRating": 3
+            },
+            {
+                "address": "Passatge Gutenberg 7",
+                "distance": 221,
+                "highestRate": 341,
+                "href": "http://sandbox.hotelscombined.com/api/2.0/hotel?apiKey=36C1BFD4-233C-48F7-935D-E8F78CB24697&sessionID=1&destination=latlon%3A41.378737%2C2.1741&checkin=2018-11-03&checkout=2018-11-13&rooms=2&hotel=hotel:Chic_Basic_Ramblas",
+                "id": 1043165,
+                "isGreatValue": true,
+                "isSelfRated": false,
+                "isWithinBoundary": false,
+                "key": "hotel:Chic_Basic_Ramblas",
+                "latitude": 41.376786,
+                "longitude": 2.174821,
+                "lowestRate": 77,
+                "name": "Chic & Basic Ramblas",
+                "numberOfProviders": 18,
+                "numberOfRates": 18,
+                "starRating": 3
+            }
+        ],
+        "scoring": 0.8
+    },
+    {
+        "hotels": [
+            {
+                "address": "La Rambla 109",
+                "distance": 586,
+                "highestRate": 354,
+                "href": "http://sandbox.hotelscombined.com/api/2.0/hotel?apiKey=36C1BFD4-233C-48F7-935D-E8F78CB24697&sessionID=1&destination=latlon%3A41.378737%2C2.1741&checkin=2018-11-03&checkout=2018-11-13&rooms=2&hotel=hotel:Hotel_1898",
+                "id": 1043281,
+                "isGreatValue": true,
+                "isSelfRated": false,
+                "isWithinBoundary": false,
+                "key": "hotel:Hotel_1898",
+                "latitude": 41.383514,
+                "longitude": 2.171238,
+                "lowestRate": 76,
+                "name": "Hotel 1898",
+                "numberOfProviders": 22,
+                "numberOfRates": 22,
+                "starRating": 4
+            },
+            {
+                "address": "Duc, 15",
+                "distance": 693,
+                "highestRate": 259,
+                "href": "http://sandbox.hotelscombined.com/api/2.0/hotel?apiKey=36C1BFD4-233C-48F7-935D-E8F78CB24697&sessionID=1&destination=latlon%3A41.378737%2C2.1741&checkin=2018-11-03&checkout=2018-11-13&rooms=2&hotel=hotel:NH_Barcelona_Centro",
+                "id": 1043347,
+                "isGreatValue": true,
+                "isSelfRated": false,
+                "isWithinBoundary": false,
+                "key": "hotel:NH_Barcelona_Centro",
+                "latitude": 41.38486,
+                "longitude": 2.17284,
+                "lowestRate": 76,
+                "name": "NH Barcelona Centro",
+                "numberOfProviders": 24,
+                "numberOfRates": 26,
+                "starRating": 3
+            },
+            {
+                "address": "Avenida Catedral 7",
+                "distance": 711,
+                "highestRate": 664,
+                "href": "http://sandbox.hotelscombined.com/api/2.0/hotel?apiKey=36C1BFD4-233C-48F7-935D-E8F78CB24697&sessionID=1&destination=latlon%3A41.378737%2C2.1741&checkin=2018-11-03&checkout=2018-11-13&rooms=2&hotel=hotel:Hotel_Colon_Barcelona",
+                "id": 1043222,
+                "isGreatValue": true,
+                "isSelfRated": false,
+                "isWithinBoundary": false,
+                "key": "hotel:Hotel_Colon_Barcelona",
+                "latitude": 41.384956,
+                "longitude": 2.175847,
+                "lowestRate": 73,
+                "name": "Hotel Colon Barcelona",
+                "numberOfProviders": 20,
+                "numberOfRates": 20,
+                "starRating": 4
+            }
+        ],
+        "scoring": 0.83
+    }
+]

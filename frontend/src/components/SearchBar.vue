@@ -47,18 +47,29 @@
     <div class="date-fields">
       <div class="date-picker-field">
         <span>From:</span>
-        <Datepicker bootstrapStyling @input="updateDesiredStartDate" required />
+        <Datepicker
+          :value="desiredStartDate"
+          @input="updateDesiredStartDate"
+          bootstrapStyling
+          required
+        />
       </div>
       <div class="date-picker-field">
         <span>To:</span>
-        <Datepicker bootstrapStyling @input="updateDesiredEndDate" required />
+        <Datepicker
+          :value="desiredEndDate"
+          @input="updateDesiredEndDate"
+          bootstrapStyling
+          required
+        />
       </div>
     </div>
     <div class="categories-list">
       <fa-icon
         v-if="!availableCategories"
         icon="spinner"
-        fixed-width size="lg"
+        fixed-width
+        size="lg"
         spin
       />
       <span v-if="availableCategories">Categories:</span>
@@ -115,6 +126,12 @@ export default {
     },
     desiredCategories () {
       return this.$store.state.searchSettings.categories
+    },
+    desiredStartDate () {
+      return this.$store.state.searchSettings.startDate
+    },
+    desiredEndDate () {
+      return this.$store.state.searchSettings.endDate
     },
     availableCategories () {
       return this.$store.state.availableCategories
@@ -258,6 +275,15 @@ export default {
   border-radius: 4px;
   border: 0;
   box-shadow: 0px 2px 10px 1px rgba(0, 0, 0, .3);
+}
+
+.date-fields .date-picker-field:last-child .vdp-datepicker__calendar {
+  right: 0;
+}
+
+.date-fields .date-picker-field .vdp-datepicker__calendar .cell.day-header {
+  height: 20px;
+  line-height: 20px;
 }
 
 .date-fields .date-picker-field .vdp-datepicker__calendar .cell.day {

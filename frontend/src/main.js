@@ -14,6 +14,7 @@ Vue.use(VueSocketio, 'http://localhost:8888', store)
 
 Vue.component('v-map', Vue2Leaflet.Map)
 Vue.component('v-tilelayer', Vue2Leaflet.TileLayer)
+Vue.component('v-icondefault', Vue2Leaflet.IconDefault)
 Vue.component('v-marker', Vue2Leaflet.Marker)
 Vue.component('fa-icon', FontAwesomeIcon)
 
@@ -30,8 +31,9 @@ new Vue({
       store.dispatch('UPDATE_AVAILABLE_CATEGORIES', categories)
     },
     poi_clusters: function ({ clusters, pois }) {
-      store.dispatch('MOVE_TO_POI_SELECTION_STEP', {pois: clusters})
-      store.dispatch('STOP_LOADING')
+      console.log(clusters)
+      console.log(pois)
+      store.dispatch('PROCESS_FETCHED_POIS', pois)
     }
   },
   el: '#app',
