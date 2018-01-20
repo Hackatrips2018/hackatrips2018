@@ -1,0 +1,114 @@
+[
+  {
+    "id": 1,
+    "name": "Gastronomia",
+    "ids": [
+      {"id": "29", "name": "Restaurantes"},
+      {"id": "43", "name": "Cafeterías"},
+      {"id": "34", "name": "Bares de Tapas"},
+      {"id": "102", "name": "Mercados"},
+      {"id": "36", "name": "Interés Gastronómico"},
+      {"id": "141", "name": "Bodegas"}
+    ]
+  },
+  {
+    "id": 1,
+    "name": "Turistico",
+    "ids": [
+      {"id": "81", "name": "De interés turístico"},
+      {"id": "101", "name": "Información Turística"},
+      {"id": "11", "name": "Museos"},
+      {"id": "14", "name": "Iglesias"},
+      {"id": "83", "name": "De interés cultural"},
+      {"id": "15", "name": "Monumentos Históricos"},
+      {"id": "16", "name": "Estatuas"},
+      {"id": "19", "name": "Palacios"},
+      {"id": "12", "name": "Castillos"},
+      {"id": "92", "name": "Teatros"},
+      {"id": "13", "name": "Catedrales"}
+    ]
+  },
+  {
+    "id": 1,
+    "name": "Compras",
+    "ids": [
+      {"id": "27", "name": "Tiendas"},
+      {"id": "25", "name": "Centros Comerciales"},
+      {"id": "121", "name": "Mercadillos"},
+      {"id": "26", "name": "Zonas de Compras"}
+    ]
+  },
+  {
+    "id": 1,
+    "name": "Naturaleza",
+    "ids": [
+      {"id": "10", "name": "Jardines"},
+      {"id": "4", "name": "Reservas Naturales"},
+      {"id": "2", "name": "Lagos"},
+      {"id": "8", "name": "Miradores"},
+      {"id": "118", "name": "Selva"},
+      {"id": "3", "name": "Cuevas"  }
+    ]
+  },
+  {
+    "id": 1,
+    "name": "Playa",
+    "ids": [
+      {"id": "9", "name": "Playas"},
+      {"id": "111", "name": "Calas"}
+    ]
+  },
+  {
+    "id": 1,
+    "name": "Fiesta",
+    "ids": [
+      {"id": "40", "name": "Bares de Copas"},
+      {"id": "65", "name": "Fiestas"},
+      {"id": "39", "name": "Discotecas"},
+      {"id": "94", "name": "Espectáculos"},
+      {"id": "37", "name": "Casinos"},
+      {"id": "41", "name": "Zonas de Copas"},
+      {"id": "42", "name": "Salas de Conciertos"},
+      {"id": "66", "name": "Conciertos"}
+    ]
+  },
+  {
+    "id": 1,
+    "name": "Entretenimiento",
+    "ids": [
+      {"id": "55", "name": "Paintball"},
+      {"id": "38", "name": "Boleras"},
+      {"id": "23", "name": "Parques Temáticos"},
+      {"id": "21", "name": "Zoos"},
+      {"id": "24", "name": "Parques de Atracciones"},
+      {"id": "20", "name": "Parques Acuáticos"}
+    ]
+  },
+  {
+    "id": 1,
+    "name": "Deportes",
+    "ids": [
+      {"id": "87", "name": "De interés deportivo"},
+      {"id": "49", "name": "Esquí"},
+      {"id": "50", "name": "Campos de Golf"},
+      {"id": "61", "name": "Surf"},
+      {"id": "47", "name": "Escalada"},
+      {"id": "48", "name": "Rafting"},
+      {"id": "62", "name": "Paracaidismo"},
+      {"id": "59", "name": "Kite Surf"},
+      {"id": "56", "name": "Pistas de Tenis"},
+      {"id": "89", "name": "Jet Sky"},
+      {"id": "90", "name": "Wakeboard"},
+      {"id": "57", "name": "Pistas de Padel"},
+      {"id": "53", "name": "Senderismo"}
+    ]
+  },
+  {
+    "id": 1,
+    "name": "Relax",
+    "ids": [
+      {"id": "31", "name": "Balnearios"},
+      {"id": "33", "name": "Spa"}
+    ]
+  }
+]
