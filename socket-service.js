@@ -3,8 +3,10 @@ module.exports = socketIo
 const minube = require('./minube')
 
 function socketIo (socket) {
-  socket.emit('test', {text: 'test'}) // emit an event to the socket
-  socket.on('get_clusters', getClusters)
+  socket.on('get_clusters', function (params) {
+    const clusters = getClusters(params)
+    socket.emit('test', {clusters}) // emit an event to the socket
+  })
 }
 
 async function getClusters (params) {
