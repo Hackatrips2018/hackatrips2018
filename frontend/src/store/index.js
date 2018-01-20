@@ -2,6 +2,8 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 // import axios from 'axios'
 
+const _ = require('lodash')
+
 Vue.use(Vuex)
 
 const POSSIBLE_STEPS = {
@@ -11,6 +13,8 @@ const POSSIBLE_STEPS = {
 }
 
 const state = {
+  lat: 40.415363,
+  lng: -3.707398,
   searchSettings: {
     locationName: null,
     peopleCount: null,
@@ -56,6 +60,10 @@ const mutations = {
 }
 
 const actions = {
+  SET_SOCKET ({ commit }, socket) {
+    store.socket = socket
+  },
+
   UPDATE_DESIRED_LOCATION_NAME ({ commit }, locationName) {
     commit('UPDATE_SEARCH_SETTINGS', Object.assign({}, state.searchSettings, { locationName }))
   },
@@ -81,20 +89,19 @@ const actions = {
     commit('UPDATE_AVAILABLE_CATEGORIES', { availableCategories })
   },
 
-  async SEARCH_POIS ({ commit }) {
+  SEARCH_POIS ({ commit }) {
     commit('START_LOADING')
 
-    this.$socket.emit('get_clusters', {
+    const categoriesIds = _.flatten(_.map(state.searchSettings.categories, cat => {
+      return _.map(cat.ids, 'id')
+    }))
+
+    store.socket.emit('get_clusters', {
       lat: state.lat,
       lng: state.lng,
       city: state.searchSettings.locationName,
-      categoriesIds: state.searchSettings.categories
+      categoriesIds
     })
-
-    setTimeout(() => {
-      commit('MOVE_TO_POI_SELECTION_STEP', {pois: []})
-      commit('STOP_LOADING')
-    }, 2000)
   }
 }
 
