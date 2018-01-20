@@ -7,17 +7,17 @@ main()
 process.on('unhandledRejection', function (err) {
   console.error(err)
 })
-async function main () {
-  const hotels = await fs.readJson('./example-all')
+async function main (hotels) {
   const index = kdbush(hotels, p => p.latitude, p => p.longitude)
   const price = 200
   let bestValue = 0
   for (let i = 0; i < hotels.length; i++) {
     const hotel = hotels[i]
     const result = closest(index, hotel.latitude, hotel.longitude)
-    const value = scoring(hotels, price, result, i)
+    const {ranking: value, hotels: triplet} = scoring(hotels, price, result, i)
     if (value > bestValue) {
       bestValue = value
+      console.log(triplet.map(h => h.lowestRate))
       console.log(value)
     }
   }
@@ -34,7 +34,7 @@ function scoring (allHotels, objectivePrice, indices, index) {
    popularity(allHotels, filtered[1]))
   const dRanking = 0.5 * distanceRanking(...hotels)
   const pRanking = 0.3 * objectivePriceRanking(objectivePrice, ...hotels)
-  return popularityRanking + dRanking + pRanking
+  return {ranking: popularityRanking + dRanking + pRanking, hotels}
 }
 
 function closest (index, lat, lng) {

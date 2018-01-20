@@ -4,6 +4,7 @@ const endpoint = 'http://sandbox.hotelscombined.com/api/2.0'
 const querystring = require('querystring')
 const r2 = require('r2')
 const fs = require('fs-extra')
+const async = require('async')
 const ping = `${endpoint}/ping?${querystring.stringify({apiKey})}`
 module.exports = main
 main()
@@ -16,7 +17,7 @@ async function main () {
   // const basic = await basicSearch()
   // console.log(basic)
   const allHotels = await getAllHotels()
-  // console.log(allHotels[0])
+  console.log(allHotels[0])
   // fs.writeJson('./example-all', allHotels)
   return {allHotels}
 }
@@ -38,13 +39,30 @@ async function basicSearch () {
 }
 async function getAllHotels () {
   const results = []
-  let pageIndex = 1
-  while (true) {
-    const {results: hotels} = await search(pageIndex)
-    if (hotels.length === 0) break
-    pageIndex++
-    results.push(...hotels)
+  let pageIndex = 0
+  let isFinished = false
+  function * a () {
+    while (!isFinished) {
+      yield 1
+    }
   }
+  await new Promise(function (resolve, reject) {
+    async.forEachLimit(a(), 10, function (item, callback) {
+      pageIndex++
+      search(pageIndex)
+        .then(function ({results: hotels}){
+
+          if (hotels.length === 0) {
+            isFinished = true
+          } else {
+            results.push(...hotels)
+          }
+          callback()
+        })
+    }, function () {
+      resolve()
+    })
+  })
   return results
 }
 async function search (pageIndex = 0) {
