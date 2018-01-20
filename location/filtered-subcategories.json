@@ -2,6 +2,7 @@
   {
     "id": 1,
     "name": "Gastronomia",
+    "icon": "utensils",
     "ids": [
       {"id": "29", "name": "Restaurantes"},
       {"id": "43", "name": "Cafeterías"},
@@ -12,8 +13,9 @@
     ]
   },
   {
-    "id": 1,
+    "id": 2,
     "name": "Turistico",
+    "icon": "camera-retro",
     "ids": [
       {"id": "81", "name": "De interés turístico"},
       {"id": "101", "name": "Información Turística"},
@@ -29,8 +31,9 @@
     ]
   },
   {
-    "id": 1,
+    "id": 3,
     "name": "Compras",
+    "icon": "shopping-cart",
     "ids": [
       {"id": "27", "name": "Tiendas"},
       {"id": "25", "name": "Centros Comerciales"},
@@ -39,8 +42,9 @@
     ]
   },
   {
-    "id": 1,
+    "id": 4,
     "name": "Naturaleza",
+    "icon": "leaf",
     "ids": [
       {"id": "10", "name": "Jardines"},
       {"id": "4", "name": "Reservas Naturales"},
@@ -51,16 +55,18 @@
     ]
   },
   {
-    "id": 1,
+    "id": 5,
     "name": "Playa",
+    "icon": "ship",
     "ids": [
       {"id": "9", "name": "Playas"},
       {"id": "111", "name": "Calas"}
     ]
   },
   {
-    "id": 1,
+    "id": 6,
     "name": "Fiesta",
+    "icon": "users",
     "ids": [
       {"id": "40", "name": "Bares de Copas"},
       {"id": "65", "name": "Fiestas"},
@@ -73,8 +79,9 @@
     ]
   },
   {
-    "id": 1,
+    "id": 7,
     "name": "Entretenimiento",
+    "icon": "gamepad",
     "ids": [
       {"id": "55", "name": "Paintball"},
       {"id": "38", "name": "Boleras"},
@@ -85,8 +92,9 @@
     ]
   },
   {
-    "id": 1,
+    "id": 8,
     "name": "Deportes",
+    "icon": "bicycle",
     "ids": [
       {"id": "87", "name": "De interés deportivo"},
       {"id": "49", "name": "Esquí"},
@@ -104,8 +112,9 @@
     ]
   },
   {
-    "id": 1,
+    "id": 9,
     "name": "Relax",
+    "icon": "coffee",
     "ids": [
       {"id": "31", "name": "Balnearios"},
       {"id": "33", "name": "Spa"}

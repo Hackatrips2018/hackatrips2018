@@ -23,10 +23,10 @@ Vue.config.productionTip = false
 new Vue({
   sockets: {
     connect: function () {
-      console.log('main: socket connected')
+      console.log('Connected to Socket.io 😃')
     },
-    test: function (data) {
-      console.log('main', data)
+    categories: function ({ categories }) {
+      store.dispatch('UPDATE_AVAILABLE_CATEGORIES', categories)
     }
   },
   el: '#app',

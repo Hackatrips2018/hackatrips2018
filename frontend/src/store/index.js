@@ -19,53 +19,7 @@ const state = {
   },
   loading: false,
   step: POSSIBLE_STEPS.form,
-  availableCategories: [
-    {
-      id: 0,
-      name: 'Gastronomia',
-      icon: 'utensils'
-    },
-    {
-      id: 1,
-      name: 'Turistico',
-      icon: 'camera-retro'
-    },
-    {
-      id: 2,
-      name: 'Compras',
-      icon: 'shopping-cart'
-    },
-    {
-      id: 3,
-      name: 'Naturaleza',
-      icon: 'leaf'
-    },
-    {
-      id: 4,
-      name: 'Playa',
-      icon: 'ship'
-    },
-    {
-      id: 5,
-      name: 'Fiesta',
-      icon: 'users'
-    },
-    {
-      id: 6,
-      name: 'Entretenimiento',
-      icon: 'gamepad'
-    },
-    {
-      id: 7,
-      name: 'Deportes',
-      icon: 'bicycle'
-    },
-    {
-      id: 8,
-      name: 'Relax',
-      icon: 'coffee'
-    }
-  ]
+  availableCategories: null
 }
 
 const mutations = {
@@ -76,9 +30,8 @@ const mutations = {
     state.searchSettings.categories = categories
   },
 
-  RECEIVE_CHARACTERS (state, { characters, charactersSearchTerm }) {
-    state.data = characters
-    state.charactersSearchTerm = charactersSearchTerm
+  UPDATE_AVAILABLE_CATEGORIES (state, { availableCategories }) {
+    state.availableCategories = availableCategories
   },
 
   START_LOADING (state) {
@@ -124,21 +77,16 @@ const actions = {
     commit('UPDATE_SEARCH_SETTINGS', newSettings)
   },
 
+  UPDATE_AVAILABLE_CATEGORIES ({ commit }, availableCategories) {
+    commit('UPDATE_AVAILABLE_CATEGORIES', { availableCategories })
+  },
+
   async SEARCH_POIS ({ commit }, location) {
     commit('START_LOADING')
     setTimeout(() => {
       commit('MOVE_TO_POI_SELECTION_STEP', {pois: []})
       commit('STOP_LOADING')
     }, 2000)
-  },
-
-  async FETCH_CHARACTERS ({ commit }, name) {
-    // const url = `https://gateway.marvel.com:443/v1/public/characters?limit=12&nameStartsWith=${name}&apikey=${config.apiKey}`
-    // const { data } = await axios.get(url)
-    // commit('RECEIVE_CHARACTERS', {
-    //   characters: data.data.results,
-    //   charactersSearchTerm: name
-    // })
   }
 }
 

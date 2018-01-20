@@ -45,8 +45,15 @@
       </div>
     </div>
     <div class="categories-list">
-      <span>Categories:</span>
+      <fa-icon
+        v-if="!availableCategories"
+        icon="spinner"
+        fixed-width size="lg"
+        spin
+      />
+      <span v-if="availableCategories">Categories:</span>
       <label
+        v-if="availableCategories"
         v-for="category in availableCategories"
         :key="category.id"
         :for="`category-${category.id}`"
@@ -195,6 +202,7 @@ export default {
 /* Second half - categories */
 
 #search-form .categories-list {
+  padding: 10px 0;
   margin-top: 10px;
   display: flex;
   flex-direction: row;
