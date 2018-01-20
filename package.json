@@ -1,0 +1,11 @@
+{
+  "name": "hackatrips-2018",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:Hackatrips2018/hackatrips2018.git",
+  "scripts": {
+    "frontend-local": "cd frontend && yarn run local",
+    "local": "yarn run frontend-local"
+  },
+  "license": "MIT"
+}
