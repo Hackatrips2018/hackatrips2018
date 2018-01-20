@@ -42,7 +42,8 @@ export default {
   border-radius: 4px;
   box-shadow: 0px 2px 10px 1px rgba(0, 0, 0, .3);
 
-  overflow: scroll;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
 
 .leaflet-control-zoom {

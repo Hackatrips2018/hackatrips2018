@@ -4,36 +4,68 @@
     <div class="loading" v-if="isLoading">
       <fa-icon icon="spinner" fixed-width size="lg" spin />
     </div>
-    <div class="results" v-if="!isLoading">
-      <header class="results__header">
-        <a class="results__header__back-button">
-          <fa-icon icon="chevron-left" size="lg" />
-          <span>Back</span>
-        </a>
-        <h2>Interesting places</h2>
-      </header>
-      <div class="interesting-places">
 
-        <div
-          v-for="place in interestingPlaces"
-          :key="place.id"
-          class="interesting-places__item"
-          @mouseenter="highlightPlace($event, place)"
-          @mouseleave="unhighlightPlace($event, place)"
-        >
-          <div class="thumbnail" style="background-image: url('http://via.placeholder.com/350x150');" />
-          <div class="data">
-            <!-- <h3>{{ place.name }}</h3> -->
-            <p v-if="place.elements.length > 1">
-              {{ place.elements.length }} points of interest, including <strong>{{ place.elements[0][0] }}</strong> and <strong>{{ place.elements[1][0] }}</strong>
-            </p>
-            <p v-else-if="place.elements.length === 1"><strong>{{ place.elements[0][0] }}</strong> is near this location.</p>
-            <p v-else>No points of interest in this location.</p>
+    <div class="multi-column-container" :class="{'multi-column-container--second-column': showHotelCombinations}">
+      <div class="results interesting-places-container" v-if="!isLoading">
+        <header class="results__header">
+          <h2>Interesting places</h2>
+        </header>
+        <div class="results__list">
+
+          <div
+            v-for="place in interestingPlaces"
+            :key="place.id"
+            class="results__list__item"
+            @click="selectPlace($event, place)"
+            @mouseenter="highlightPlace($event, place)"
+            @mouseleave="unhighlightPlace($event, place)"
+          >
+            <div class="thumbnail" style="background-image: url('http://via.placeholder.com/350x150');" />
+            <div class="data">
+              <!-- <h3>{{ place.name }}</h3> -->
+              <p v-if="place.elements.length > 1">
+                {{ place.elements.length }} points of interest, including <strong>{{ place.elements[0][0] }}</strong> and <strong>{{ place.elements[1][0] }}</strong>
+              </p>
+              <p v-else-if="place.elements.length === 1"><strong>{{ place.elements[0][0] }}</strong> is near this location.</p>
+              <p v-else>No points of interest in this location.</p>
+            </div>
           </div>
-        </div>
 
+        </div>
+      </div>
+
+      <div class="results hotel-combinations-container" v-if="!isLoading">
+        <header class="results__header">
+          <a class="results__header__back-button" @click="unselectPlace()">
+            <fa-icon icon="chevron-left" size="lg" />
+            <span>Back</span>
+          </a>
+          <h2>Hotel combinations</h2>
+        </header>
+        <div class="results__list">
+
+          <div
+            v-for="place in interestingPlaces"
+            :key="place.id"
+            class="results__list__item"
+            @mouseenter="highlightPlace($event, place)"
+            @mouseleave="unhighlightPlace($event, place)"
+          >
+            <div class="thumbnail" style="background-image: url('http://via.placeholder.com/350x150');" />
+            <div class="data">
+              <!-- <h3>{{ place.name }}</h3> -->
+              <p v-if="place.elements.length > 1">
+                {{ place.elements.length }} points of interest, including <strong>{{ place.elements[0][0] }}</strong> and <strong>{{ place.elements[1][0] }}</strong>
+              </p>
+              <p v-else-if="place.elements.length === 1"><strong>{{ place.elements[0][0] }}</strong> is near this location.</p>
+              <p v-else>No points of interest in this location.</p>
+            </div>
+          </div>
+
+        </div>
       </div>
     </div>
+
   </div>
 </template>
 
@@ -55,6 +87,9 @@ export default {
     },
     interestingPlaces () {
       return this.$store.state.poiClusters
+    },
+    showHotelCombinations () {
+      return this.$store.state.selectedPoiCluster
     }
   },
   methods: {
@@ -63,6 +98,12 @@ export default {
     },
     unhighlightPlace (event, place) {
       this.$store.dispatch('UNHIGHLIGHT_POI_CLUSTER', place)
+    },
+    selectPlace (event, place) {
+      this.$store.dispatch('SELECT_POI_CLUSTER', place)
+    },
+    unselectPlace () {
+      this.$store.dispatch('UNSELECT_POI_CLUSTER')
     }
   }
 }
@@ -88,7 +129,19 @@ export default {
   justify-content: center;
 }
 
-#search-results .results .results__header {
+.multi-column-container {
+  display: flex;
+  flex-direction: row;
+  width: 1030px;
+  justify-content: space-between;
+  transition: transform 300ms;
+}
+
+.multi-column-container--second-column {
+  transform: translateX(-510px)
+}
+
+.results .results__header {
   position: sticky;
   position: -webkit-sticky;
   background: #fff;
@@ -100,50 +153,43 @@ export default {
   align-items: center;
 }
 
-#search-results .results .results__header .results__header__back-button {
+.results .results__header .results__header__back-button {
   margin-right: 10px;
   color: #007bff;
   cursor: pointer;
 }
 
-#search-results .results .results__header .results__header__back-button:hover {
+.results .results__header .results__header__back-button:hover {
   color: #0069d9;
 }
 
-#search-results .results .results__header h2 {
+.results .results__header h2 {
   margin-bottom: 0;
 }
 
-.interesting-places {
+.results__list {
   margin-left: -5px;
   margin-right: -5px;
 }
 
-.interesting-places__item {
+.results__list__item {
   padding: 10px;
   display: flex;
   flex-direction: row;
-  /*border-radius: 4px;
-  border: 1px solid transparent;*/
   border-left: 5px solid transparent;
   border-bottom: 1px dashed transparent;
   border-top: 1px dashed transparent;
   cursor: pointer;
 }
 
-/*.interesting-places__item:hover {
-  background: #f8f9fa;
-  border-color: #ced4da;
-}*/
-
-.interesting-places__item:hover {
+.results__list__item:hover {
   background: rgba(0, 123, 255, 0.1);
   border-left-color: #007bff;
   border-bottom-color: rgba(0, 123, 255, 0.3);
   border-top-color: #fff;
 }
 
-.interesting-places__item .thumbnail {
+.results__list__item .thumbnail {
   margin: 0 10px 10px 0;
   width: 50px;
   height: 50px;
@@ -153,11 +199,11 @@ export default {
   flex-shrink: 0;
 }
 
-.interesting-places__item:last-child .thumbnail {
+.results__list__item:last-child .thumbnail {
   margin-bottom: 0;
 }
 
-.interesting-places__item .data {
+.results__list__item .data {
   flex-grow: 1;
   flex-shrink: 1;
 }

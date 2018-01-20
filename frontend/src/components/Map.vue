@@ -45,7 +45,10 @@ export default {
     },
     poiClusters () {
       if (this.$store.state.highlightedPoiCluster) {
-        return [{ coordinates: L.latLng(...this.$store.state.highlightedPoiCluster.centroid) }]
+        // return [{ coordinates: L.latLng(...this.$store.state.highlightedPoiCluster.centroid) }]
+        return this.$store.state.poiClusters.map(cluster => {
+          return { coordinates: L.latLng(...cluster.centroid) }
+        })
       } else if (this.$store.state.poiClusters) {
         return this.$store.state.poiClusters.map(cluster => {
           return { coordinates: L.latLng(...cluster.centroid) }

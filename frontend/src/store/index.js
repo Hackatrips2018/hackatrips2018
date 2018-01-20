@@ -67,12 +67,20 @@ const mutations = {
     state.step = POSSIBLE_STEPS.hotelSelection
   },
 
-  SET_HIGHLIGHTED_POI_CLUTER (state, { poiCluster }) {
+  SET_HIGHLIGHTED_POI_CLUSTER (state, { poiCluster }) {
     state.highlightedPoiCluster = poiCluster
   },
 
-  REMOVE_HIGHLIGHTED_POI_CLUTER (state) {
+  REMOVE_HIGHLIGHTED_POI_CLUSTER (state) {
     state.highlightedPoiCluster = null
+  },
+
+  SET_SELECTED_POI_CLUSTER (state, { poiCluster }) {
+    state.selectedPoiCluster = poiCluster
+  },
+
+  REMOVE_SELECTED_POI_CLUSTER (state) {
+    state.selectedPoiCluster = null
   }
 }
 
@@ -135,13 +143,22 @@ const actions = {
   },
 
   HIGHLIGHT_POI_CLUSTER ({ commit }, poiCluster) {
-    commit('SET_HIGHLIGHTED_POI_CLUTER', { poiCluster })
+    commit('SET_HIGHLIGHTED_POI_CLUSTER', { poiCluster })
   },
 
   UNHIGHLIGHT_POI_CLUSTER ({ commit }, poiCluster) {
     if (store.highlightedPoiCluster === poiCluster) {
-      commit('REMOVE_HIGHLIGHTED_POI_CLUTER')
+      commit('REMOVE_HIGHLIGHTED_POI_CLUSTER')
     }
+  },
+
+  SELECT_POI_CLUSTER ({ commit }, poiCluster) {
+    commit('SET_SELECTED_POI_CLUSTER', { poiCluster })
+    // TODO: Perform query to hotels backend
+  },
+
+  UNSELECT_POI_CLUSTER ({ commit }, poiCluster) {
+    commit('REMOVE_SELECTED_POI_CLUSTER')
   }
 }
 
