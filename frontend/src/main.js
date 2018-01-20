@@ -29,8 +29,7 @@ new Vue({
     categories: function ({ categories }) {
       store.dispatch('UPDATE_AVAILABLE_CATEGORIES', categories)
     },
-    get_clusters: function ({ clusters }) {
-      console.log('main', clusters)
+    poi_clusters: function ({ clusters, pois }) {
       store.dispatch('MOVE_TO_POI_SELECTION_STEP', {pois: clusters})
       store.dispatch('STOP_LOADING')
     }

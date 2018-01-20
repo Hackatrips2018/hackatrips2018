@@ -12,6 +12,14 @@
   "dependencies": {
     "express": "^4.16.2",
     "express-domain-middleware": "^0.1.0",
+    "geocluster": "^0.1.1",
+    "lodash": "^4.17.4",
+    "request": "^2.83.0",
+    "async": "^2.6.0",
+    "fs-extra": "^5.0.0",
+    "geodist": "^0.2.1",
+    "kdbush": "^1.0.1",
+    "r2": "^2.0.0",
     "socket.io": "^2.0.4"
   },
   "devDependencies": {

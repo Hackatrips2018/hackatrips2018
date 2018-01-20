@@ -9,8 +9,8 @@ function socketIo (socket) {
   socket.emit('categories', { categories })
 
   socket.on('get_clusters', async function (params) {
-    const clusters = await getClusters(params)
-    socket.emit('get_clusters', { clusters }) // emit an event to the socket
+    const clustersAndPois = await getClustersAndPois(params)
+    socket.emit('poi_clusters', { clustersAndPois }) // emit an event to the socket
   })
 
   socket.on('get_hotels', function (params) {
@@ -26,14 +26,15 @@ function socketIo (socket) {
  * @params params.city
  * @params params.categoriesIds
  */
-async function getClusters (params) {
+async function getClustersAndPois (params) {
   const city = await minube.getNearestCity(params.lat, params.lng, params.city)
   const pois = await minube.getInterestedPois(city, params.categoriesIds)
 
   console.log('Number of pois ' + pois.length)
   const clusters = minube.clusterPois(pois)
   console.log('Number of clusters ' + clusters.length)
-  return clusters
+
+  return {clusters, pois}
 }
 
 /**
