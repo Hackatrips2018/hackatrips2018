@@ -10,13 +10,14 @@ main()
 async function main () {
   const result = await r2(ping).text
   console.log(result)
-  const hotels = await search()
+  // const hotels = await search()
   // console.log(hotels)
-  const hotel = await getHotel(hotels.results[0].key)
-  const basic = await basicSearch()
+  // const hotel = await getHotel(hotels.results[0].key)
+  // const basic = await basicSearch()
   // console.log(basic)
-  console.log(hotel)
-  return {hotel, hotels, basic}
+  const allHotels = await getAllHotels()
+  console.log(allHotels.length)
+  return {allHotels}
 }
 // no distance
 async function basicSearch () {
@@ -34,17 +35,27 @@ async function basicSearch () {
   const url = `${endpoint}/hotels/basic?${querystring.stringify(search)}`
   return r2(url).json
 }
-
-async function search () {
+async function getAllHotels () {
+  const results = []
+  let pageIndex = 1
+  while (true) {
+    const {results: hotels} = await search(pageIndex)
+    if (hotels.length === 0) break
+    pageIndex++
+    results.push(...hotels)
+  }
+  return results
+}
+async function search (pageIndex) {
   const lat = 41.378737
   const lon = 2.1741
   const search = {
     destination: `latlon:${lat},${lon}`,
     checkin: '2018-11-03',
     checkout: '2018-11-13',
-    rooms: 2,
+    rooms: '2',
     apiKey,
-    pageIndex: 0,
+    pageIndex: pageIndex,
     sessionId: '1',
   }
   const url = `${endpoint}/hotels?${querystring.stringify(search)}`
