@@ -3,24 +3,26 @@ const kdbush = require('kdbush')
 const geodist = require('geodist')
 const N_PEOPLE = 9
 
-main()
+module.exports = main
 process.on('unhandledRejection', function (err) {
   console.error(err)
 })
-async function main (hotels) {
+async function main (hotels, price) {
   const index = kdbush(hotels, p => p.latitude, p => p.longitude)
-  const price = 200
   let bestValue = 0
+  const recommendations = []
   for (let i = 0; i < hotels.length; i++) {
     const hotel = hotels[i]
     const result = closest(index, hotel.latitude, hotel.longitude)
     const {ranking: value, hotels: triplet} = scoring(hotels, price, result, i)
-    if (value > bestValue) {
+    recommendations.push({value, hotels: triplet})
+    /*if (value > bestValue) {
       bestValue = value
       console.log(triplet.map(h => h.lowestRate))
       console.log(value)
-    }
+    }*/
   }
+  return recommendations
 }
 
 function scoring (allHotels, objectivePrice, indices, index) {

@@ -7,19 +7,19 @@ const fs = require('fs-extra')
 const async = require('async')
 const ping = `${endpoint}/ping?${querystring.stringify({apiKey})}`
 module.exports = main
-main()
 
-async function main () {
+
+async function main (lat, lng) {
   const result = await r2(ping).text
-  const hotels = await search()
+  // const hotels = await search()
   // const hotel = await getHotel(hotels.results[0].key)
   // console.log(hotel)
   // const basic = await basicSearch()
   // console.log(basic)
-  const allHotels = await getAllHotels()
+  const allHotels = await getAllHotels(lat, lng)
   console.log(allHotels.length)
   // fs.writeJson('./example-all', allHotels)
-  return {allHotels}
+  return allHotels
 }
 // no distance
 async function basicSearch () {
@@ -37,7 +37,7 @@ async function basicSearch () {
   const url = `${endpoint}/hotels/basic?${querystring.stringify(search)}`
   return r2(url).json
 }
-async function getAllHotels () {
+async function getAllHotels (lat, lng) {
   const results = []
   let pageIndex = 0
   let isFinished = false
@@ -49,7 +49,7 @@ async function getAllHotels () {
   await new Promise(function (resolve, reject) {
     async.forEachLimit(a(), 10, function (item, callback) {
       pageIndex++
-      search(pageIndex)
+      search(lat, lng, pageIndex)
         .then(function ({results: hotels}){
 
           if (hotels.length === 0) {
@@ -65,14 +65,12 @@ async function getAllHotels () {
   })
   return results
 }
-async function search (pageIndex = 0) {
-  const lat = 41.378737
-  const lon = 2.1741
+async function search (lat, lng, pageIndex = 0) {
   const search = {
-    destination: `latlon:${lat},${lon}`,
-    checkin: '2018-11-03',
-    checkout: '2018-11-13',
-    rooms: '2',
+    destination: `latlon:${lat},${lng}`,
+    checkin: '2018-08-03',
+    checkout: '2018-08-13',
+    rooms: '3',
     apiKey,
     pageIndex: pageIndex,
     sessionId: '1',
