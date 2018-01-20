@@ -221,7 +221,7 @@ export default {
 /* Second - dates */
 
 .date-fields {
-  margin-top: 10px;
+  margin: 10px 0 0 5px;
   display: flex;
   flex-direction: row;
   justify-content: stretch;
@@ -271,10 +271,10 @@ export default {
 
 #search-form .categories-list {
   padding: 10px 0;
-  margin-top: 10px;
+  margin: 10px 5px 0 5px;
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 
 #search-form .categories-list label.categories-list__item > input { /* HIDE RADIO */
