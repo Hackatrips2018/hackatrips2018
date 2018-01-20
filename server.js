@@ -5,7 +5,7 @@ const http = require('http')
 
 const socketService = require('./socket-service')
 
-const PORT = 6666
+const PORT = 8888
 
 const app = express()
 app.use(expressDomain)
@@ -19,9 +19,7 @@ app.get('/back', function (req, res, next) {
 })
 
 const server = http.createServer(app)
-const io = socketIO(server, {
-  path: '/back/socket.io'
-})
+const io = socketIO(server)
 
 io.on('connection', socketService)
 

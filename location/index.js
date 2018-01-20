@@ -24,6 +24,6 @@ async function main () {
   console.log('Number of pois ' + pois.length)
   const clusters = minube.clusterPois(pois)
   console.log('Number of clusters ' + clusters.length)
-  console.log(clusters)
+  console.log(JSON.stringify(clusters, null, 2))
 }
 

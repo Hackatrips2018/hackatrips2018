@@ -1,6 +1,7 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
+import VueSocketio from 'vue-socket.io'
 import App from './App'
 import router from './router'
 import store from './store'
@@ -8,6 +9,8 @@ import Vue2Leaflet from 'vue2-leaflet'
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 import '@fortawesome/fontawesome-free-solid'
 import '@/assets/floating-labels.css'
+
+Vue.use(VueSocketio, 'http://localhost:8888', store)
 
 Vue.component('v-map', Vue2Leaflet.Map)
 Vue.component('v-tilelayer', Vue2Leaflet.TileLayer)
@@ -18,6 +21,14 @@ Vue.config.productionTip = false
 
 /* eslint-disable no-new */
 new Vue({
+  sockets: {
+    connect: function () {
+      console.log('main: socket connected')
+    },
+    test: function (data) {
+      console.log('main', data)
+    }
+  },
   el: '#app',
   router,
   store,
