@@ -41,17 +41,17 @@
         <label for="price">{{ priceLabelString }}</label>
       </div>
       <div class="form-label-group submit-input-group">
-        <input type="submit" class="btn btn-primary" value="Go"/>
+        <input type="submit" class="btn btn-primary" :disabled="!isReadyToSearch" value="Go"/>
       </div>
     </div>
     <div class="date-fields">
       <div class="date-picker-field">
         <span>From:</span>
-        <Datepicker bootstrapStyling="true" @input="updateDesiredStartDate" required />
+        <Datepicker bootstrapStyling @input="updateDesiredStartDate" required />
       </div>
       <div class="date-picker-field">
         <span>To:</span>
-        <Datepicker bootstrapStyling="true" @input="updateDesiredEndDate" required />
+        <Datepicker bootstrapStyling @input="updateDesiredEndDate" required />
       </div>
     </div>
     <div class="categories-list">
@@ -96,6 +96,14 @@ export default {
   },
   components: { Datepicker },
   computed: {
+    isReadyToSearch () {
+      return this.$store.state.searchSettings.locationName &&
+        this.$store.state.searchSettings.peopleCount &&
+        this.$store.state.searchSettings.price &&
+        this.$store.state.searchSettings.categories &&
+        this.$store.state.searchSettings.startDate &&
+        this.$store.state.searchSettings.endDate
+    },
     desiredLocation () {
       return this.$store.state.searchSettings.locationName
     },
