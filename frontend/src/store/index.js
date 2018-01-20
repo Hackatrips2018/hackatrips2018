@@ -124,8 +124,16 @@ const actions = {
     commit('UPDATE_SEARCH_SETTINGS', newSettings)
   },
 
-  async SEARCH_POIS ({ commit }, location) {
+  async SEARCH_POIS ({ commit }) {
     commit('START_LOADING')
+
+    this.$socket.emit('get_clusters', {
+      lat: state.lat,
+      lng: state.lng,
+      city: state.searchSettings.locationName,
+      categoriesIds: state.searchSettings.categories
+    })
+
     setTimeout(() => {
       commit('MOVE_TO_POI_SELECTION_STEP', {pois: []})
       commit('STOP_LOADING')
