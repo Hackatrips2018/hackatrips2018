@@ -7,5 +7,10 @@
     "frontend-local": "cd frontend && yarn run local",
     "local": "yarn run frontend-local"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.2",
+    "express-domain-middleware": "^0.1.0",
+    "socket.io": "^2.0.4"
+  }
 }
