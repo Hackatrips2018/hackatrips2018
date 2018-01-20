@@ -1,6 +1,6 @@
 <template>
   <div id="map">
-    <h-search-bar />
+    <LeftPanel />
     <v-map :zoom="zoom" :center="center">
       <v-tilelayer :url="url" :attribution="attribution"></v-tilelayer>
       <v-marker :lat-lng="marker"></v-marker>
@@ -10,9 +10,11 @@
 
 <script>
 import 'leaflet/dist/leaflet.css'
+import LeftPanel from '@/components/LeftPanel'
 
 export default {
   name: 'hMap',
+  components: { LeftPanel },
   data () {
     return {
       zoom: 13,

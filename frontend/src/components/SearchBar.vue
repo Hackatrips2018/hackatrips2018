@@ -1,71 +1,70 @@
 <template>
-  <div id="search-bar">
-    <form id="search-form">
-      <div class="string-fields">
-        <div class="form-label-group location-input-group">
-          <input
-            type="text"
-            id="location-name"
-            class="form-control"
-            placeholder="Place"
-            :value="desiredLocation"
-            @input="updateDesiredLocation"
-            required
-            autofocus
-          >
-          <label for="location-name">Place</label>
-        </div>
-        <div class="form-label-group people-input-group">
-          <input
-            type="text"
-            id="people-count"
-            class="form-control"
-            placeholder="People"
-            :value="desiredPeopleCount"
-            @input="updateDesiredPeopleCount"
-            required
-            autofocus
-          >
-          <label for="people-count">{{ desiredPeopleCount > 1 ? `${desiredPeopleCount} people` : 'one person' }}</label>
-        </div>
-        <div class="form-label-group price-input-group">
-          <input
-            type="text"
-            id="price"
-            class="form-control"
-            placeholder="Desired price"
-            :value="desiredPrice"
-            @input="updateDesiredPrice"
-            required
-            autofocus
-          >
-          <label for="price">Desired price</label>
-        </div>
-        <div class="form-label-group submit-input-group">
-          <input type="submit" class="btn btn-primary" value="Go"/>
-        </div>
-      </div>
-      <div class="categories-list">
-        <label
-          v-for="category in availableCategories"
-          :key="category.id"
-          :for="`category-${category.id}`"
-          class="categories-list__item"
-          v-b-tooltip.hover
-          :title="category.name"
+  <form id="search-form" @submit.prevent="handleSearch">
+    <div class="string-fields">
+      <div class="form-label-group location-input-group">
+        <input
+          type="text"
+          id="location-name"
+          class="form-control"
+          placeholder="Place"
+          :value="desiredLocation"
+          @input="updateDesiredLocation"
+          required
+          autofocus
         >
-          <input
-            :id="`category-${category.id}`"
-            type="checkbox"
-            :value="category.id"
-            :checked="hasChosenCategory(category.id)"
-            @click="toggleDesiredCategory"
-          />
-          <fa-icon :icon="category.icon" fixed-width size="lg" />
-        </label>
+        <label for="location-name">Place</label>
       </div>
-    </form>
-  </div>
+      <div class="form-label-group people-input-group">
+        <input
+          type="number"
+          id="people-count"
+          class="form-control"
+          placeholder="People"
+          :value="desiredPeopleCount"
+          @input="updateDesiredPeopleCount"
+          required
+          autofocus
+        >
+        <label for="people-count">{{ peopleLabelString }}</label>
+      </div>
+      <div class="form-label-group price-input-group" v-b-tooltip.hover title="Price per person">
+        <input
+          type="number"
+          id="price"
+          class="form-control"
+          placeholder="Desired price"
+          :value="desiredPrice"
+          @input="updateDesiredPrice"
+          required
+          autofocus
+        >
+        <label for="price">{{ priceLabelString }}</label>
+      </div>
+      <div class="form-label-group submit-input-group">
+        <input type="submit" class="btn btn-primary" value="Go"/>
+      </div>
+    </div>
+    <div class="categories-list">
+      <span>Categories:</span>
+      <label
+        v-for="category in availableCategories"
+        :key="category.id"
+        :for="`category-${category.id}`"
+        class="categories-list__item"
+        v-b-tooltip.hover
+        :title="category.name"
+      >
+        <input
+          :id="`category-${category.id}`"
+          type="checkbox"
+          :value="category.id"
+          :checked="hasChosenCategory(category.id)"
+          @click="toggleDesiredCategory"
+        />
+        <fa-icon :icon="category.icon" fixed-width size="lg" />
+      </label>
+    </div>
+  </form>
 </template>
 
 <script>
@@ -94,6 +93,22 @@ export default {
     },
     chosenCategories () {
       return Object.values(this.$store.state.searchSettings.categories)
+    },
+    peopleLabelString () {
+      return this.desiredPeopleCount > 1
+        ? `${this.desiredPeopleCount} people`
+        : 'one person'
+    },
+    priceLabelString () {
+      if (this.desiredPeopleCount > 0) {
+        return this.desiredPrice > 0
+          ? `${this.desiredPrice} € × ${this.desiredPeopleCount} = ${this.desiredPrice * this.desiredPeopleCount} €`
+          : 'Desired price'
+      } else if (this.desiredPrice) {
+        return `${this.desiredPrice} €`
+      } else {
+        return 'Desired price'
+      }
     }
   },
   methods: {
@@ -113,30 +128,13 @@ export default {
       this.$store.dispatch('TOGGLE_DESIRED_CATEGORY', e.target.value)
     },
     handleSearch () {
-      this.$store.dispatch('FETCH_CHARACTERS', this.name)
-      this.$emit('updateSelected', this.name)
+      this.$store.dispatch('SEARCH_POIS')
     }
   }
 }
 </script>
 
 <style>
-
-/* General search bar settings */
-
-#search-bar {
-  width: 300px;
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  z-index: 999;
-
-  background: #fff;
-  padding: 5px;
-
-  border-radius: 4px;
-  box-shadow: 0px 2px 10px 1px rgba(0, 0, 0, .3);
-}
 
 #search-form {
   display: flex;
@@ -169,9 +167,17 @@ export default {
   border-right: 0;
 }
 
+#search-form .string-fields .people-input-group {
+  width: 130px;
+}
+
 #search-form .string-fields .people-input-group input {
   border-radius: 0;
   border-right: 0;
+}
+
+#search-form .string-fields .price-input-group {
+  width: 140px;
 }
 
 #search-form .string-fields .price-input-group input {
@@ -192,7 +198,7 @@ export default {
   margin-top: 10px;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 
 #search-form .categories-list label.categories-list__item > input { /* HIDE RADIO */
@@ -204,20 +210,6 @@ export default {
 }
 #search-form .categories-list label.categories-list__item > input:checked + svg { /* (RADIO CHECKED) IMAGE STYLES */
   color: #007bff;
-}
-
-/* Hide leaflet zoom */
-
-.leaflet-control-zoom {
-  display: none;
-}
-
-.leaflet-control-zoom-in {
-
-}
-
-.leaflet-control-zoom-out {
-
 }
 
 </style>
