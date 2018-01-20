@@ -3,6 +3,7 @@ const apiKey = '36C1BFD4-233C-48F7-935D-E8F78CB24697'
 const endpoint = 'http://sandbox.hotelscombined.com/api/2.0'
 const querystring = require('querystring')
 const r2 = require('r2')
+const fs = require('fs-extra')
 const ping = `${endpoint}/ping?${querystring.stringify({apiKey})}`
 module.exports = main
 main()
@@ -16,7 +17,8 @@ async function main () {
   // const basic = await basicSearch()
   // console.log(basic)
   const allHotels = await getAllHotels()
-  console.log(allHotels.length)
+  console.log(allHotels)
+  fs.writeJson('./example-all', allHotels)
   return {allHotels}
 }
 // no distance
