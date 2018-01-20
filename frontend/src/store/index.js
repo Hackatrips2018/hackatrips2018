@@ -15,6 +15,8 @@ const state = {
     locationName: null,
     peopleCount: null,
     price: null,
+    startDate: null,
+    endDate: null,
     categories: {}
   },
   loading: false,
@@ -23,11 +25,13 @@ const state = {
 }
 
 const mutations = {
-  UPDATE_SEARCH_SETTINGS (state, { locationName, peopleCount, price, categories }) {
+  UPDATE_SEARCH_SETTINGS (state, { locationName, peopleCount, price, categories, startDate, endDate }) {
     state.searchSettings.locationName = locationName
     state.searchSettings.peopleCount = peopleCount
     state.searchSettings.price = price
     state.searchSettings.categories = categories
+    state.searchSettings.startDate = startDate
+    state.searchSettings.endDate = endDate
   },
 
   UPDATE_AVAILABLE_CATEGORIES (state, { availableCategories }) {
@@ -66,6 +70,14 @@ const actions = {
 
   UPDATE_DESIRED_PRICE ({ commit }, price) {
     commit('UPDATE_SEARCH_SETTINGS', Object.assign({}, state.searchSettings, { price }))
+  },
+
+  UPDATE_DESIRED_START_DATE ({ commit }, startDate) {
+    commit('UPDATE_SEARCH_SETTINGS', Object.assign({}, state.searchSettings, { startDate }))
+  },
+
+  UPDATE_DESIRED_END_DATE ({ commit }, endDate) {
+    commit('UPDATE_SEARCH_SETTINGS', Object.assign({}, state.searchSettings, { endDate }))
   },
 
   TOGGLE_DESIRED_CATEGORY ({ commit }, categoryIDString) {

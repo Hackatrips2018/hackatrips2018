@@ -44,6 +44,16 @@
         <input type="submit" class="btn btn-primary" value="Go"/>
       </div>
     </div>
+    <div class="date-fields">
+      <div class="date-picker-field">
+        <span>From:</span>
+        <Datepicker bootstrapStyling="true" @input="updateDesiredStartDate" required />
+      </div>
+      <div class="date-picker-field">
+        <span>To:</span>
+        <Datepicker bootstrapStyling="true" @input="updateDesiredEndDate" required />
+      </div>
+    </div>
     <div class="categories-list">
       <fa-icon
         v-if="!availableCategories"
@@ -75,6 +85,8 @@
 </template>
 
 <script>
+import Datepicker from 'vuejs-datepicker'
+
 export default {
   name: 'hSearchBar',
   data () {
@@ -82,6 +94,7 @@ export default {
       msg: 'Welcome to Your Vue.js App'
     }
   },
+  components: { Datepicker },
   computed: {
     desiredLocation () {
       return this.$store.state.searchSettings.locationName
@@ -134,6 +147,12 @@ export default {
     toggleDesiredCategory (e) {
       this.$store.dispatch('TOGGLE_DESIRED_CATEGORY', e.target.value)
     },
+    updateDesiredStartDate (newDate) {
+      this.$store.dispatch('UPDATE_DESIRED_START_DATE', newDate)
+    },
+    updateDesiredEndDate (newDate) {
+      this.$store.dispatch('UPDATE_DESIRED_END_DATE', newDate)
+    },
     handleSearch () {
       this.$store.dispatch('SEARCH_POIS')
     }
@@ -148,7 +167,7 @@ export default {
   flex-direction: column;
 }
 
-/* First half - location and people */
+/* First - location and people */
 
 #search-form .string-fields {
     display: flex;
@@ -199,7 +218,56 @@ export default {
   padding-bottom: 12px;
 }
 
-/* Second half - categories */
+/* Second - dates */
+
+.date-fields {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: stretch;
+}
+
+.date-fields .date-picker-field {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  align-items: center;
+}
+
+.date-fields .date-picker-field > span {
+  margin-right: 10px;
+}
+
+.date-fields .date-picker-field .vdp-datepicker {
+  flex-grow: 1;
+}
+
+.date-fields .date-picker-field:first-child {
+  margin-right: 10px;
+}
+
+.date-fields .date-picker-field .vdp-datepicker__calendar {
+  border-radius: 4px;
+  border: 0;
+  box-shadow: 0px 2px 10px 1px rgba(0, 0, 0, .3);
+}
+
+.date-fields .date-picker-field .vdp-datepicker__calendar .cell.day {
+  border-radius: 4px;
+}
+
+.date-fields .date-picker-field .vdp-datepicker__calendar .cell:not(.blank):not(.disabled).day:hover,
+.date-fields .date-picker-field .vdp-datepicker__calendar .cell:not(.blank):not(.disabled).month:hover,
+.date-fields .date-picker-field .vdp-datepicker__calendar .cell:not(.blank):not(.disabled).year:hover {
+  border-color: #007bff;
+}
+
+.date-fields .date-picker-field .vdp-datepicker__calendar .cell.day.selected {
+  background: #007bff;
+  color: #fff;
+}
+
+/* Third - categories */
 
 #search-form .categories-list {
   padding: 10px 0;
