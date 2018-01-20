@@ -23,10 +23,16 @@ Vue.config.productionTip = false
 new Vue({
   sockets: {
     connect: function () {
+      store.dispatch('SET_SOCKET', this.$socket)
       console.log('Connected to Socket.io 😃')
     },
     categories: function ({ categories }) {
       store.dispatch('UPDATE_AVAILABLE_CATEGORIES', categories)
+    },
+    get_clusters: function ({ clusters }) {
+      console.log('main', clusters)
+      store.dispatch('MOVE_TO_POI_SELECTION_STEP', {pois: clusters})
+      store.dispatch('STOP_LOADING')
     }
   },
   el: '#app',
