@@ -10,15 +10,14 @@ main()
 
 async function main () {
   const result = await r2(ping).text
-  console.log(result)
-  // const hotels = await search()
-  // console.log(hotels)
+  const hotels = await search()
   // const hotel = await getHotel(hotels.results[0].key)
+  // console.log(hotel)
   // const basic = await basicSearch()
   // console.log(basic)
   const allHotels = await getAllHotels()
-  console.log(allHotels)
-  fs.writeJson('./example-all', allHotels)
+  // console.log(allHotels[0])
+  // fs.writeJson('./example-all', allHotels)
   return {allHotels}
 }
 // no distance
@@ -48,7 +47,7 @@ async function getAllHotels () {
   }
   return results
 }
-async function search (pageIndex) {
+async function search (pageIndex = 0) {
   const lat = 41.378737
   const lon = 2.1741
   const search = {
