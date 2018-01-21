@@ -45,7 +45,11 @@ function clusterPois (pois) {
 
   return clusters.sort((a, b) => {
     return a.elements.length - b.elements.length
-  }).reverse()
+  }).reverse().map((cluster, index) => {
+    cluster.id = index
+    cluster.radius = 1000 // TODO: Put here the radius of this cluster
+    return cluster
+  })
 }
 
 function getOwnCategories () {

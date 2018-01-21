@@ -47,14 +47,11 @@
           <h2>Hotel combinations</h2>
         </header>
 
-        <div class="loading" v-if="isLoading">
-          <fa-icon icon="spinner" fixed-width size="lg" spin />
-        </div>
-
-        <div class="results__list" v-else>
+        <div class="results__list">
 
           <div
             v-for="hCombination in hotelCombinations"
+            :key="hCombination.key"
             class="results__list__item"
             @mouseenter="highlightHotelCombination($event, hCombination)"
             @mouseleave="unhighlightHotelCombination($event, hCombination)"
@@ -71,6 +68,11 @@
           </div>
 
         </div>
+
+        <div class="loading" v-if="isLoading">
+          <fa-icon icon="spinner" fixed-width size="lg" spin />
+        </div>
+
       </div>
     </div>
 

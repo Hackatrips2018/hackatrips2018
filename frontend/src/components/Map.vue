@@ -6,18 +6,21 @@
       <v-icondefault image-path="https://unpkg.com/leaflet@1.3.1/dist/images/"></v-icondefault>
       <v-circle
         v-if="showPoiClusters && highlightedPoiCluster"
+        :key="highlightedPoiCluster.id"
         :lat-lng="highlightedPoiCluster.coordinates"
-        radius="1000"
+        :radius="highlightedPoiCluster.radius"
       />
       <v-marker
         v-if="showPoiClusters"
         v-for="marker in poiClusters"
+        :key="marker.id"
         :lat-lng="marker.coordinates"
         :icon="clusterIcon"
       />
       <v-marker
         v-if="showPoiClusters"
         v-for="marker in poisInHighlightedCluster"
+        :key="marker.id"
         :lat-lng="marker.coordinates"
         :icon="highlightedClusterPoisIcon"
       />

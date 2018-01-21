@@ -15,7 +15,7 @@ async function main (hotels, price) {
     const hotel = hotels[i]
     const result = closest(index, hotel.latitude, hotel.longitude)
     const {ranking: value, hotels: triplet} = scoring(hotels, price, result, i)
-    recommendations.push({value, hotels: triplet, geojson: {
+    recommendations.push({value, hotels: triplet, id: i, geojson: {
       "type": "FeatureCollection",
       "features": [
         {
@@ -55,7 +55,7 @@ async function main (hotels, price) {
   }
 
   recommendations.sort((r1, r2) => r2.value - r1.value)
-  return recommendations.slice(0, 100)
+  return recommendations.slice(0, 3)
 }
 
 function scoring (allHotels, objectivePrice, indices, index) {

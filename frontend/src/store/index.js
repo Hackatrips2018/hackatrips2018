@@ -62,7 +62,6 @@ const mutations = {
   MOVE_TO_POI_SELECTION_STEP (state, { poiClusters }) {
     state.step = POSSIBLE_STEPS.poiSelection
     state.poiClusters = poiClusters
-    state.poiClusters = require('../assets/mocked-locations.json') // TODO: Remove me ASAP
     state.hotelCombinations = null
   },
 
@@ -93,7 +92,16 @@ const mutations = {
 
   REMOVE_HIGHLIGHTED_HOTEL_COMBINATION (state) {
     state.highlightedHotelCombination = null
+  },
+
+  ADD_HOTEL_COMBINATION (state, { hotelCombination }) {
+    if (!state.hotelCombinations) {
+      state.hotelCombinations = [hotelCombination]
+    } else {
+      state.hotelCombinations.push(hotelCombination)
+    }
   }
+
 }
 
 const actions = {
@@ -167,11 +175,20 @@ const actions = {
   SELECT_POI_CLUSTER ({ commit }, poiCluster) {
     commit('SET_SELECTED_POI_CLUSTER', { poiCluster })
     commit('START_LOADING')
-    // TODO: Perform query to hotels backend
-    setTimeout(() => {
-      commit('MOVE_TO_HOTEL_SELECTION_STEP', { hotelCombinations: require('../assets/mocked-hotels.json') })
-      commit('STOP_LOADING')
-    }, 1500)
+
+    store.socket.emit('get_hotels', {
+      lat: state.lat,
+      lng: state.lng,
+      price: state.searchSettings.price
+    })
+  },
+
+  PROCESS_FETCHED_HOTEL ({ commit }, hotelCombination) {
+    commit('ADD_HOTEL_COMBINATION', { hotelCombination })
+  },
+
+  PROCESS_FINISHED_FETCHING_HOTELS ({ commit }) {
+    commit('STOP_LOADING')
   },
 
   UNSELECT_POI_CLUSTER ({ commit }, poiCluster) {

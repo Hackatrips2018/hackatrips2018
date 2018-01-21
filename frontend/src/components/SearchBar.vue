@@ -108,13 +108,15 @@ export default {
   components: { Datepicker },
   computed: {
     isReadyToSearch () {
-      return this.$store.state.searchSettings.locationName &&
+      return !!(
+        this.$store.state.searchSettings.locationName &&
         this.$store.state.searchSettings.peopleCount &&
         this.$store.state.searchSettings.price &&
-        this.$store.state.searchSettings.categories &&
-        this.chosenCategories.filter(i => !!i).length &&
+        // this.$store.state.searchSettings.categories &&
+        // Object.keys(this.$store.state.searchSettings.categories).filter(i => i).length &&
         this.$store.state.searchSettings.startDate &&
         this.$store.state.searchSettings.endDate
+      )
     },
     desiredLocation () {
       return this.$store.state.searchSettings.locationName
@@ -136,9 +138,6 @@ export default {
     },
     availableCategories () {
       return this.$store.state.availableCategories
-    },
-    chosenCategories () {
-      return Object.values(this.$store.state.searchSettings.categories)
     },
     peopleLabelString () {
       return this.desiredPeopleCount > 1

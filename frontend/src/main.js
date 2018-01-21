@@ -31,10 +31,15 @@ new Vue({
     categories: function ({ categories }) {
       store.dispatch('UPDATE_AVAILABLE_CATEGORIES', categories)
     },
-    poi_clusters: function ({ clusters, pois }) {
-      console.log(clusters)
-      console.log(pois)
-      store.dispatch('PROCESS_FETCHED_POIS', pois)
+    poi_clusters: function ({ clusters }) {
+      store.dispatch('PROCESS_FETCHED_POIS', clusters)
+    },
+    hotels_recommendation: function (recommendation) {
+      console.log(recommendation)
+      store.dispatch('PROCESS_FETCHED_HOTEL', recommendation)
+    },
+    hotels_recommendation_end: function () {
+      store.dispatch('PROCESS_FINISHED_FETCHING_HOTELS')
     }
   },
   el: '#app',

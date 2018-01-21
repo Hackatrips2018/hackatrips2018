@@ -10,7 +10,7 @@ function socketIo (socket) {
 
   socket.on('get_clusters', async function (params) {
     const clustersAndPois = await getClustersAndPois(params)
-    socket.emit('poi_clusters', { clustersAndPois }) // emit an event to the socket
+    socket.emit('poi_clusters', clustersAndPois) // emit an event to the socket
   })
 
   socket.on('get_hotels', function (params) {
@@ -52,6 +52,7 @@ async function getHotels (socket, params) {
     await wait(100)
     socket.emit('hotels_recommendation', recommendation)
   }
+  socket.emit('hotels_recommendation_end')
 }
 
 function wait (time) {
