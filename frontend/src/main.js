@@ -32,8 +32,9 @@ new Vue({
     categories: function ({ categories }) {
       store.dispatch('UPDATE_AVAILABLE_CATEGORIES', categories)
     },
-    poi_clusters: function ({ clusters }) {
+    poi_clusters: function ({ clusters, latlng, bbox }) {
       store.dispatch('PROCESS_FETCHED_POIS', clusters)
+      store.dispatch('SET_MAP_VIEW', {latlng, bbox})
     },
     hotels_recommendation: function (recommendation) {
       console.log(recommendation)

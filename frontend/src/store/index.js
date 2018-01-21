@@ -96,6 +96,11 @@ const mutations = {
 
   ADD_HOTEL_COMBINATION (state, { hotelCombination }) {
     state.hotelCombinations.push(hotelCombination)
+  },
+
+  SET_MAP_CENTER (state, {lat, lng}) {
+    state.lat = lat
+    state.lng = lng
   }
 
 }
@@ -151,6 +156,10 @@ const actions = {
       city: state.searchSettings.locationName,
       categoriesIds
     })
+  },
+
+  SET_MAP_VIEW ({ commit }, {latlng, bbox}) {
+    commit('SET_MAP_CENTER', latlng)
   },
 
   PROCESS_FETCHED_POIS ({ commit }, poiClusters) {

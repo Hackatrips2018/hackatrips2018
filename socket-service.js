@@ -2,6 +2,7 @@ module.exports = socketIo
 
 const categories = require('./location/filtered-subcategories.json')
 const minube = require('./location/minube')
+const geocoding = require('./geocoding')
 const recommendationEngine = require('./recommendation-engine/main')
 
 function socketIo (socket) {
@@ -21,20 +22,20 @@ function socketIo (socket) {
 /**
  *
  * @param params
- * @params params.lng
- * @params params.lat
  * @params params.city
  * @params params.categoriesIds
  */
 async function getClustersAndPois (params) {
-  const city = await minube.getNearestCity(params.lat, params.lng, params.city)
+  const {latlng, bbox} = await geocoding(params.city)
+
+  const city = await minube.getNearestCity(latlng.lat, latlng.lng, params.city)
   const pois = await minube.getInterestedPois(city, params.categoriesIds)
 
   console.log('Number of pois ' + pois.length)
   const clusters = minube.clusterPois(pois)
   console.log('Number of clusters ' + clusters.length)
 
-  return {clusters, pois}
+  return {clusters, bbox, latlng}
 }
 
 /**
