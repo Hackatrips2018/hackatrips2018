@@ -10,7 +10,7 @@ import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 import '@fortawesome/fontawesome-free-solid'
 import '@/assets/floating-labels.css'
 
-Vue.use(VueSocketio, 'http://localhost:3000', store)
+Vue.use(VueSocketio, process.env.SERVER_HOST, store)
 
 Vue.component('v-map', Vue2Leaflet.Map)
 Vue.component('v-tilelayer', Vue2Leaflet.TileLayer)
