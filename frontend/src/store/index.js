@@ -13,6 +13,7 @@ const POSSIBLE_STEPS = {
 }
 
 const state = {
+  mapZoom: 13,
   lat: 40.415363,
   lng: -3.707398,
   searchSettings: {
@@ -101,6 +102,10 @@ const mutations = {
   SET_MAP_CENTER (state, {lat, lng}) {
     state.lat = lat
     state.lng = lng
+  },
+
+  SET_MAP_ZOOM (state, mapZoom) {
+    state.mapZoom = mapZoom
   }
 
 }
@@ -160,6 +165,9 @@ const actions = {
 
   SET_MAP_VIEW ({ commit }, {latlng, bbox}) {
     commit('SET_MAP_CENTER', latlng)
+  },
+  SET_MAP_ZOOM ({ commit }, mapZoom) {
+    commit('SET_MAP_ZOOM', mapZoom)
   },
 
   PROCESS_FETCHED_POIS ({ commit }, poiClusters) {

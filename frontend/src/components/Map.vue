@@ -56,7 +56,6 @@ export default {
   components: { LeftPanel },
   data () {
     return {
-      zoom: 13,
       url: 'https://api.mapbox.com/styles/v1/mapbox/streets-v8/tiles/{z}/{x}/{y}?access_token=pk.eyJ1Ijoic3Vtb2xhcmkiLCJhIjoiY2pjbmdpZDdlMHNwODJxcGc1azVlZ3ZnNiJ9.TXbnXB1ubggQ6Qy-jBvyDA',
       attribution: 'Imagery © <a href="http://mapbox.com">Mapbox</a>',
       // url: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
@@ -67,6 +66,9 @@ export default {
   computed: {
     center () {
       return [this.$store.state.lat, this.$store.state.lng]
+    },
+    zoom () {
+      return this.$store.state.mapZoom
     },
     showPoiClusters () {
       return this.$store.state.step === POSSIBLE_STEPS.poiSelection
@@ -136,7 +138,6 @@ export default {
     },
     hotelCombinations () {
       if (this.$store.state.hotelCombinations) {
-        console.log(this.$store.state.hotelCombinations)
         return this.$store.state.hotelCombinations.map(hCombination => {
           return {
             coordinates: L.latLng(hCombination.latitude, hCombination.longitude)

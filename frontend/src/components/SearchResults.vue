@@ -135,9 +135,17 @@ export default {
       this.$store.dispatch('SELECT_POI_CLUSTER', place)
     },
     unselectPlace () {
+      this.$store.dispatch('SET_MAP_ZOOM', 13)
       this.$store.dispatch('UNSELECT_POI_CLUSTER')
     },
     highlightHotelCombination (event, hCombination) {
+      this.$store.dispatch('SET_MAP_ZOOM', 21)
+      const firsCoordinate = hCombination.geojson.features[0].geometry.coordinates[0][0]
+      const latlng = {
+        lat: firsCoordinate[1],
+        lng: firsCoordinate[0]
+      }
+      this.$store.dispatch('SET_MAP_VIEW', {latlng})
       this.$store.dispatch('HIGHLIGHT_HOTEL_COMBINATION', hCombination)
     },
     unhighlightHotelCombination (event, hCombination) {
