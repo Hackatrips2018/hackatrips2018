@@ -112,6 +112,7 @@ export default {
         this.$store.state.searchSettings.peopleCount &&
         this.$store.state.searchSettings.price &&
         this.$store.state.searchSettings.categories &&
+        this.chosenCategories.filter(i => !!i).length &&
         this.$store.state.searchSettings.startDate &&
         this.$store.state.searchSettings.endDate
     },
@@ -158,7 +159,7 @@ export default {
   },
   methods: {
     hasChosenCategory (categoryID) {
-      return !!this.$store.state.searchSettings.categories[categoryID]
+      return !!this.$store.state.searchSettings.categories[parseInt(categoryID)]
     },
     updateDesiredLocation (e) {
       this.$store.dispatch('UPDATE_DESIRED_LOCATION_NAME', e.target.value)
