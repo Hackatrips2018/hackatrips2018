@@ -134,7 +134,7 @@ export default {
   flex-direction: row;
   width: 1035px;
   justify-content: space-between;
-  transition: transform 300ms;
+  transition: transform 600ms cubic-bezier(0.190, 1.000, 0.220, 1.000);
 }
 
 .multi-column-container--second-column {
