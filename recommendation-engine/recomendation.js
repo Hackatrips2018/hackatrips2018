@@ -15,14 +15,47 @@ async function main (hotels, price) {
     const hotel = hotels[i]
     const result = closest(index, hotel.latitude, hotel.longitude)
     const {ranking: value, hotels: triplet} = scoring(hotels, price, result, i)
-    recommendations.push({value, hotels: triplet})
+    recommendations.push({value, hotels: triplet, geojson: {
+      "type": "FeatureCollection",
+      "features": [
+        {
+          "type": "Feature",
+          "properties": {},
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+              [
+                [
+                  triplet[0].longitude,
+                  triplet[1].latitude
+                ],
+                [
+                  triplet[1].longitude,
+                  triplet[1].latitude
+                ],
+                [
+                  triplet[2].longitude,
+                  triplet[2].latitude
+                ],
+                [
+                  triplet[0].longitude,
+                  triplet[0].latitude
+                ]
+              ]
+            ]
+          }
+        }
+      ]
+    }})
     /*if (value > bestValue) {
       bestValue = value
       console.log(triplet.map(h => h.lowestRate))
       console.log(value)
     }*/
   }
-  return recommendations
+
+  recommendations.sort((r1, r2) => r2.value - r1.value)
+  return recommendations.slice(0, 100)
 }
 
 function scoring (allHotels, objectivePrice, indices, index) {
