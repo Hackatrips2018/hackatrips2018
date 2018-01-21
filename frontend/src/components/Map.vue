@@ -4,6 +4,11 @@
     <v-map :zoom="zoom" :center="center">
       <v-tilelayer :url="url" :attribution="attribution"></v-tilelayer>
       <v-icondefault image-path="https://unpkg.com/leaflet@1.3.1/dist/images/"></v-icondefault>
+      <v-circle
+        v-if="shouldShowPoiClusters && highlightedPoiCluster"
+        :lat-lng="highlightedPoiCluster.coordinates"
+        radius="1000"
+      />
       <v-marker
         v-if="shouldShowPoiClusters"
         v-for="marker in poiClusters"
@@ -55,6 +60,15 @@ export default {
         })
       } else {
         return []
+      }
+    },
+    highlightedPoiCluster () {
+      if (this.$store.state.highlightedPoiCluster) {
+        return {
+          coordinates: L.latLng(...this.$store.state.highlightedPoiCluster.centroid)
+        }
+      } else {
+        return null
       }
     },
     poisInHighlightedCluster () {
