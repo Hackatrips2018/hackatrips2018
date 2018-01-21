@@ -149,10 +149,10 @@ export default {
         style: function () {
           return {
             weight: 2,
-            color: 'green',
+            color: '#007bff',
             opacity: 1,
-            fillColor: 'red',
-            fillOpacity: 1
+            fillColor: '#007bff',
+            fillOpacity: 0.3
           }
         }
       }

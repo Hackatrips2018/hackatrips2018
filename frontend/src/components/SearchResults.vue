@@ -61,6 +61,21 @@
               <!-- <h3>{{ place.name }}</h3> -->
               <p v-if="hCombination.hotels.length > 1">
                 Splitted in {{ hCombination.hotels.length }} hotels: <span v-for="(hotel, index) in hCombination.hotels" :key="hotel.id"><a :href="hotel.href" target="_blank"><strong>{{ hotel.name }}</strong></a><span v-if="index === hCombination.hotels.length - 2"> and </span><span v-else-if="index !== hCombination.hotels.length - 1">, </span></span>.
+                <br /><em>Total price: {{ hCombination.hotels.reduce((p, h) => p + h.lowestRate, 0) }} €.</em>
+                <fa-icon
+                  v-for="star in getFullStarsCount(hCombination)"
+                  icon="star"
+                  fixed-width
+                  class="star"
+                  size="sm"
+                />
+                <fa-icon
+                  v-for="star in getHalfStarsCount(hCombination)"
+                  icon="star"
+                  fixed-width
+                  class="star"
+                  size="sm"
+                />
               </p>
               <p v-else-if="hCombination.hotels.length === 1">Everybody in the same hotel: <strong>{{ hCombination.hotels[0].name }}</strong>.</p>
               <p v-else>No hotels in this combination.</p>
@@ -125,6 +140,14 @@ export default {
     },
     unhighlightHotelCombination (event, hCombination) {
       this.$store.dispatch('UNHIGHLIGHT_HOTEL_COMBINATION', hCombination)
+    },
+    getFullStarsCount (hCombination) {
+      const totalStars = hCombination.hotels.reduce((p, h) => p + h.starRating, 0) / hCombination.hotels.length
+      return Math.round(totalStars, 0)
+    },
+    getHalfStarsCount (hCombination) {
+      const totalStars = hCombination.hotels.reduce((p, h) => p + h.starRating, 0) / hCombination.hotels.length * 10
+      return Math.round(totalStars, 1) % 10 > 5
     }
   }
 }
@@ -235,6 +258,10 @@ export default {
 .results__list__item .data {
   flex-grow: 1;
   flex-shrink: 1;
+}
+
+.star {
+  color: #ffc107;
 }
 
 </style>
