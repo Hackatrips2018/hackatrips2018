@@ -25,9 +25,11 @@ const state = {
   },
   loading: false,
   step: POSSIBLE_STEPS.form,
-  poiClusters: null,
-  selectedPoiCluster: null,
-  highlightedPoiCluster: null,
+  poiClusters: null, // Potential locations and a list of POIs near them
+  selectedPoiCluster: null, // The potential location user clicked on
+  highlightedPoiCluster: null, // The potential location user highlighted but not clicked yet
+  hotelCombinations: null, // Potential hotel combinations
+  highlightedHotelCombination: null, // Potential hotel combination user highlighted
   availableCategories: null
 }
 
@@ -60,11 +62,13 @@ const mutations = {
   MOVE_TO_POI_SELECTION_STEP (state, { poiClusters }) {
     state.step = POSSIBLE_STEPS.poiSelection
     state.poiClusters = poiClusters
-    state.poiClusters = require('../assets/mocked-locations.json')
+    state.poiClusters = require('../assets/mocked-locations.json') // TODO: Remove me ASAP
+    state.hotelCombinations = null
   },
 
-  MOVE_TO_HOTEL_SELECTION_STEP (state) {
+  MOVE_TO_HOTEL_SELECTION_STEP (state, { hotelCombinations }) {
     state.step = POSSIBLE_STEPS.hotelSelection
+    state.hotelCombinations = hotelCombinations
   },
 
   SET_HIGHLIGHTED_POI_CLUSTER (state, { poiCluster }) {
@@ -81,6 +85,14 @@ const mutations = {
 
   REMOVE_SELECTED_POI_CLUSTER (state) {
     state.selectedPoiCluster = null
+  },
+
+  SET_HIGHLIGHTED_HOTEL_COMBINATION (state, { hotelCombination }) {
+    state.highlightedHotelCombination = hotelCombination
+  },
+
+  REMOVE_HIGHLIGHTED_HOTEL_COMBINATION (state) {
+    state.highlightedHotelCombination = null
   }
 }
 
@@ -154,11 +166,27 @@ const actions = {
 
   SELECT_POI_CLUSTER ({ commit }, poiCluster) {
     commit('SET_SELECTED_POI_CLUSTER', { poiCluster })
+    commit('START_LOADING')
     // TODO: Perform query to hotels backend
+    setTimeout(() => {
+      commit('MOVE_TO_HOTEL_SELECTION_STEP', { hotelCombinations: require('../assets/mocked-hotels.json') })
+      commit('STOP_LOADING')
+    }, 1500)
   },
 
   UNSELECT_POI_CLUSTER ({ commit }, poiCluster) {
     commit('REMOVE_SELECTED_POI_CLUSTER')
+    commit('MOVE_TO_POI_SELECTION_STEP', { poiClusters: state.poiClusters })
+  },
+
+  HIGHLIGHT_HOTEL_COMBINATION ({ commit }, hotelCombination) {
+    commit('SET_HIGHLIGHTED_HOTEL_COMBINATION', { hotelCombination })
+  },
+
+  UNHIGHLIGHT_HOTEL_COMBINATION ({ commit }, hotelCombination) {
+    if (store.highlightedHotelCombination === hotelCombination) {
+      commit('REMOVE_HIGHLIGHTED_HOTEL_COMBINATION')
+    }
   }
 }
 

@@ -1,16 +1,19 @@
 <template>
   <div id="search-results" v-if="isVisible">
     <div class="separator" />
-    <div class="loading" v-if="isLoading">
-      <fa-icon icon="spinner" fixed-width size="lg" spin />
-    </div>
 
-    <div class="multi-column-container" :class="{'multi-column-container--second-column': showHotelCombinations}">
-      <div class="results interesting-places-container" v-if="!isLoading">
+    <div class="multi-column-container" :class="{'multi-column-container--showing-second-column': showHotelCombinations}">
+      <div class="results interesting-places-container">
+
         <header class="results__header">
           <h2>Interesting places</h2>
         </header>
-        <div class="results__list">
+
+        <div class="loading" v-if="isLoading">
+          <fa-icon icon="spinner" fixed-width size="lg" spin />
+        </div>
+
+        <div class="results__list" v-else-if="!showHotelCombinations">
 
           <div
             v-for="place in interestingPlaces"
@@ -34,7 +37,8 @@
         </div>
       </div>
 
-      <div class="results hotel-combinations-container" v-if="!isLoading">
+      <div class="results hotel-combinations-container">
+
         <header class="results__header">
           <a class="results__header__back-button" @click="unselectPlace()">
             <fa-icon icon="chevron-left" size="lg" />
@@ -42,23 +46,27 @@
           </a>
           <h2>Hotel combinations</h2>
         </header>
-        <div class="results__list">
+
+        <div class="loading" v-if="isLoading">
+          <fa-icon icon="spinner" fixed-width size="lg" spin />
+        </div>
+
+        <div class="results__list" v-else>
 
           <div
-            v-for="place in interestingPlaces"
-            :key="place.id"
+            v-for="hCombination in hotelCombinations"
             class="results__list__item"
-            @mouseenter="highlightPlace($event, place)"
-            @mouseleave="unhighlightPlace($event, place)"
+            @mouseenter="highlightHotelCombination($event, hCombination)"
+            @mouseleave="unhighlightHotelCombination($event, hCombination)"
           >
             <div class="thumbnail" style="background-image: url('http://via.placeholder.com/350x150');" />
             <div class="data">
               <!-- <h3>{{ place.name }}</h3> -->
-              <p v-if="place.elements.length > 1">
-                {{ place.elements.length }} points of interest, including <strong>{{ place.elements[0][0] }}</strong> and <strong>{{ place.elements[1][0] }}</strong>
+              <p v-if="hCombination.hotels.length > 1">
+                Splitted in {{ hCombination.hotels.length }} hotels: <span v-for="(hotel, index) in hCombination.hotels" :key="hotel.id"><a :href="hotel.href" target="_blank"><strong>{{ hotel.name }}</strong></a><span v-if="index === hCombination.hotels.length - 2"> and </span><span v-else-if="index !== hCombination.hotels.length - 1">, </span></span>.
               </p>
-              <p v-else-if="place.elements.length === 1"><strong>{{ place.elements[0][0] }}</strong> is near this location.</p>
-              <p v-else>No points of interest in this location.</p>
+              <p v-else-if="hCombination.hotels.length === 1">Everybody in the same hotel: <strong>{{ hCombination.hotels[0].name }}</strong>.</p>
+              <p v-else>No hotels in this combination.</p>
             </div>
           </div>
 
@@ -83,13 +91,18 @@ export default {
       return this.$store.state.loading
     },
     isVisible () {
-      return this.$store.state.step !== POSSIBLE_STEPS.form || this.$store.state.loading
+      return this.$store.state.step !== POSSIBLE_STEPS.form || this.isLoading
     },
     interestingPlaces () {
       return this.$store.state.poiClusters
     },
     showHotelCombinations () {
-      return this.$store.state.selectedPoiCluster
+      return this.$store.state.step === POSSIBLE_STEPS.hotelSelection || (
+        this.$store.state.selectedPoiCluster && this.isLoading
+      )
+    },
+    hotelCombinations () {
+      return this.$store.state.hotelCombinations
     }
   },
   methods: {
@@ -104,6 +117,12 @@ export default {
     },
     unselectPlace () {
       this.$store.dispatch('UNSELECT_POI_CLUSTER')
+    },
+    highlightHotelCombination (event, hCombination) {
+      this.$store.dispatch('HIGHLIGHT_HOTEL_COMBINATION', hCombination)
+    },
+    unhighlightHotelCombination (event, hCombination) {
+      this.$store.dispatch('UNHIGHLIGHT_HOTEL_COMBINATION', hCombination)
     }
   }
 }
@@ -123,7 +142,7 @@ export default {
 
 #search-results .loading {
   width: 100%;
-  margin-top: 10px;
+  margin: 10px 0;
   padding: 5px 0;
   display: flex;
   justify-content: center;
@@ -137,12 +156,16 @@ export default {
   transition: transform 600ms cubic-bezier(0.190, 1.000, 0.220, 1.000);
 }
 
-.multi-column-container--second-column {
+.multi-column-container--showing-second-column {
   transform: translateX(-525px)
 }
 
-.multi-column-container--second-column > *:not(:last-child) {
+.multi-column-container--showing-second-column > *:not(:last-child) {
   margin-right: 15px;
+}
+
+.results  {
+  width: 510px;
 }
 
 .results .results__header {
