@@ -34,7 +34,7 @@
       />
       <v-marker
         v-if="showHotelCombinations && highlightedHotelCombination"
-        v-for="hotel in highlightedHotelCombination.hotels"
+        v-for="hotel in highlightedHotels"
         :key="hotel.id"
         :lat-lng="getHotelLatLng(hotel)"
         :icon="hotelIcon"
@@ -146,6 +146,13 @@ export default {
     },
     highlightedHotelCombination () {
       return this.$store.state.highlightedHotelCombination
+    },
+    highlightedHotels () {
+      if (this.$store.state.highlightedHotelCombination) {
+        return this.$store.state.highlightedHotelCombination.hotels
+      } else {
+        return []
+      }
     },
     highlightedHotelCombinationOptions () {
       return {
