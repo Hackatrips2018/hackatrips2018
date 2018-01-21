@@ -23,7 +23,9 @@
         :key="marker.id"
         :lat-lng="marker.coordinates"
         :icon="highlightedClusterPoisIcon"
-      />
+      >
+        <v-popup :content="marker.name"></v-popup>
+      </v-marker>
       <v-geojson-layer
         v-if="showHotelCombinations && highlightedHotelCombination"
         :geojson="highlightedHotelCombination.geojson"
@@ -91,7 +93,10 @@ export default {
     poisInHighlightedCluster () {
       return this.$store.state.highlightedPoiCluster
         ? this.$store.state.highlightedPoiCluster.elements.map(poi => {
-          return { coordinates: L.latLng(...poi) }
+          return {
+            name: poi.name,
+            coordinates: L.latLng(poi.latitude, poi.longitude)
+          }
         })
         : []
     },

@@ -207,20 +207,7 @@ const actions = {
   }
 }
 
-const getters = {
-  // searchLocationName: state => state.searchSettings.searchLocationName,
-  // searchPeopleCount: state => state.searchSettings.peopleCount,
-  // characters: state => {
-  //   return state.data.map(data => {
-  //     return {
-  //       name: data.name,
-  //       url: data.urls[1] ? data.urls[1].url : data.urls[0].url,
-  //       image: `${data.thumbnail.path}.${data.thumbnail.extension}`,
-  //       description: data.description === '' ? 'No description listed for this character.' : data.description
-  //     }
-  //   })
-  // }
-}
+const getters = { }
 
 const store = new Vuex.Store({
   state,

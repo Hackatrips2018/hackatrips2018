@@ -18,6 +18,7 @@ Vue.component('v-icondefault', Vue2Leaflet.IconDefault)
 Vue.component('v-marker', Vue2Leaflet.Marker)
 Vue.component('v-circle', Vue2Leaflet.LCircle)
 Vue.component('v-geojson-layer', Vue2Leaflet.GeoJSON)
+Vue.component('v-popup', Vue2Leaflet.Popup)
 Vue.component('fa-icon', FontAwesomeIcon)
 
 Vue.config.productionTip = false

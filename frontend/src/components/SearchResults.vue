@@ -27,9 +27,9 @@
             <div class="data">
               <!-- <h3>{{ place.name }}</h3> -->
               <p v-if="place.elements.length > 1">
-                {{ place.elements.length }} points of interest, including <strong>{{ place.elements[0][0] }}</strong> and <strong>{{ place.elements[1][0] }}</strong>
+                {{ place.elements.length }} points of interest, including <strong>{{ place.elements[0].name }}</strong> and <strong>{{ place.elements[1].name }}</strong>
               </p>
-              <p v-else-if="place.elements.length === 1"><strong>{{ place.elements[0][0] }}</strong> is near this location.</p>
+              <p v-else-if="place.elements.length === 1"><strong>{{ place.elements[0].name }}</strong> is near this location.</p>
               <p v-else>No points of interest in this location.</p>
             </div>
           </div>

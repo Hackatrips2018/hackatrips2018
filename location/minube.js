@@ -48,6 +48,11 @@ function clusterPois (pois) {
   }).reverse().map((cluster, index) => {
     cluster.id = index
     cluster.radius = 1000 // TODO: Put here the radius of this cluster
+    cluster.elements = cluster.elements.map(
+      element => pois.filter(
+        poi => `${element[0]}` === poi.latitude && `${element[1]}` === poi.longitude
+      )[0]
+    ).filter(i => i)
     return cluster
   })
 }
