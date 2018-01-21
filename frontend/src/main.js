@@ -10,7 +10,7 @@ import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 import '@fortawesome/fontawesome-free-solid'
 import '@/assets/floating-labels.css'
 
-Vue.use(VueSocketio, 'http://localhost:3000', store)
+Vue.use(VueSocketio, process.env.SERVER_HOST, store)
 
 Vue.component('v-map', Vue2Leaflet.Map)
 Vue.component('v-tilelayer', Vue2Leaflet.TileLayer)
@@ -33,8 +33,9 @@ new Vue({
     categories: function ({ categories }) {
       store.dispatch('UPDATE_AVAILABLE_CATEGORIES', categories)
     },
-    poi_clusters: function ({ clusters }) {
+    poi_clusters: function ({ clusters, latlng, bbox }) {
       store.dispatch('PROCESS_FETCHED_POIS', clusters)
+      store.dispatch('SET_MAP_VIEW', {latlng, bbox})
     },
     hotels_recommendation: function (recommendation) {
       console.log(recommendation)
