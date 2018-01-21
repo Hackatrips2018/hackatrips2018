@@ -16,14 +16,14 @@
         <div class="results__list" v-else-if="!showHotelCombinations">
 
           <div
-            v-for="place in interestingPlaces"
+            v-for="(place, index) in interestingPlaces"
             :key="place.id"
             class="results__list__item"
             @click="selectPlace($event, place)"
             @mouseenter="highlightPlace($event, place)"
             @mouseleave="unhighlightPlace($event, place)"
           >
-            <div class="thumbnail" style="background-image: url('http://via.placeholder.com/350x150');" />
+            <div class="thumbnail" :style="{'background-image': 'url(' + require(`../assets/street-view-${Math.min(index, 4)}.jpg`) + ')'}" />
             <div class="data">
               <!-- <h3>{{ place.name }}</h3> -->
               <p v-if="place.elements.length > 1">
