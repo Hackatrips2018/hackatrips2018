@@ -6,9 +6,8 @@
       <v-icondefault image-path="https://unpkg.com/leaflet@1.3.1/dist/images/"></v-icondefault>
       <v-circle
         v-if="showPoiClusters && highlightedPoiCluster"
-        :key="highlightedPoiCluster.id"
         :lat-lng="highlightedPoiCluster.coordinates"
-        :radius="highlightedPoiCluster.radius"
+        :radius="highlightedPoiCluster.poiCluster.radius"
       />
       <v-marker
         v-if="showPoiClusters"
@@ -16,6 +15,8 @@
         :key="marker.id"
         :lat-lng="marker.coordinates"
         :icon="clusterIcon"
+        v-on:l-mouseover="highlightPoiCluster($event, marker.poiCluster)"
+        v-on:l-mouseleave="unhighlightPoiCluster($event, marker.poiCluster)"
       />
       <v-marker
         v-if="showPoiClusters"
@@ -71,11 +72,17 @@ export default {
     poiClusters () {
       if (this.$store.state.highlightedPoiCluster) {
         return this.$store.state.poiClusters.map(cluster => {
-          return { coordinates: L.latLng(...cluster.centroid) }
+          return {
+            coordinates: L.latLng(...cluster.centroid),
+            poiCluster: cluster
+          }
         })
       } else if (this.$store.state.poiClusters) {
         return this.$store.state.poiClusters.map(cluster => {
-          return { coordinates: L.latLng(...cluster.centroid) }
+          return {
+            coordinates: L.latLng(...cluster.centroid),
+            poiCluster: cluster
+          }
         })
       } else {
         return []
@@ -84,7 +91,8 @@ export default {
     highlightedPoiCluster () {
       if (this.$store.state.highlightedPoiCluster) {
         return {
-          coordinates: L.latLng(...this.$store.state.highlightedPoiCluster.centroid)
+          coordinates: L.latLng(...this.$store.state.highlightedPoiCluster.centroid),
+          poiCluster: this.$store.state.highlightedPoiCluster
         }
       } else {
         return null
@@ -102,23 +110,23 @@ export default {
     },
     clusterIcon () {
       return L.icon({
-        iconUrl: require('../assets/marker-icon-2x.png'),
-        iconSize: [25, 41],
-        iconAnchor: [20, 20]
+        iconUrl: require('../assets/marker-circle-icon-2x.png'),
+        iconSize: [25, 25],
+        iconAnchor: [12.5, 12.5]
       })
     },
     highlightedClusterPoisIcon () {
       return L.icon({
-        iconUrl: require('../assets/marker-circle-icon-2x.png'),
-        iconSize: [25, 25],
-        iconAnchor: [20, 20]
+        iconUrl: require('../assets/marker-icon-2x.png'),
+        iconSize: [25, 41],
+        iconAnchor: [12.5, 20]
       })
     },
     hotelIcon () {
       return L.icon({
         iconUrl: require('../assets/marker-icon-2x.png'),
         iconSize: [25, 41],
-        iconAnchor: [20, 20]
+        iconAnchor: [12.5, 20]
       })
     },
     hotelCombinations () {
@@ -153,6 +161,14 @@ export default {
       return this.hotelCombinations.map(hCombination => {
         return []
       })
+    }
+  },
+  methods: {
+    highlightPoiCluster (event, poiCluster) {
+      this.$store.dispatch('HIGHLIGHT_POI_CLUSTER', poiCluster)
+    },
+    unhighlightPoiCluster (event, poiCluster) {
+      this.$store.dispatch('UNHIGHLIGHT_POI_CLUSTER', poiCluster)
     }
   }
 }

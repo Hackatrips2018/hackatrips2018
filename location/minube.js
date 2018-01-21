@@ -35,7 +35,7 @@ async function getInterestedPois (city, subcategoriesIds) {
 
 function clusterPois (pois) {
   // multiply stdev with this factor, the smaller the more clusters
-  const bias = 1.5
+  const bias = 0.0005
 
   const coordinates = _.map(pois, poi => {
     return [parseFloat(poi.latitude), parseFloat(poi.longitude)]
@@ -47,7 +47,7 @@ function clusterPois (pois) {
     return a.elements.length - b.elements.length
   }).reverse().map((cluster, index) => {
     cluster.id = index
-    cluster.radius = 1000 // TODO: Put here the radius of this cluster
+    cluster.radius = 250 // TODO: Put here the radius of this cluster
     cluster.elements = cluster.elements.map(
       element => pois.filter(
         poi => `${element[0]}` === poi.latitude && `${element[1]}` === poi.longitude
