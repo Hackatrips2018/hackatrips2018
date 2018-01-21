@@ -50,8 +50,8 @@ async function getClusters (params) {
 async function getHotels (socket, params) {
   const recommendations = await recommendationEngine(params.lat, params.lng, params.price)
   for (const recommendation of recommendations) {
-    await wait(100)
     socket.emit('hotels_recommendation', recommendation)
+    await wait(1000)
   }
   socket.emit('hotels_recommendation_end')
 }

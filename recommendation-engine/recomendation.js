@@ -58,7 +58,7 @@ async function main (hotels, price) {
   recommendations.sort((r1, r2) => r2.scoring - r1.scoring)
   const uniqueRecommendations = _.sortedUniqBy(recommendations, r => r.scoring)
 
-  return uniqueRecommendations.slice(0, 3)
+  return uniqueRecommendations.slice(0, 30)
 }
 
 function scoring (allHotels, objectivePrice, indices, index) {

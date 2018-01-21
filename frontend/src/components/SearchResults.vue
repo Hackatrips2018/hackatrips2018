@@ -50,13 +50,15 @@
         <div class="results__list">
 
           <div
-            v-for="hCombination in hotelCombinations"
+            v-for="(hCombination, index) in hotelCombinations"
             :key="hCombination.key"
             class="results__list__item"
             @mouseenter="highlightHotelCombination($event, hCombination)"
             @mouseleave="unhighlightHotelCombination($event, hCombination)"
           >
-            <div class="thumbnail" style="background-image: url('http://via.placeholder.com/350x150');" />
+            <div class="thumbnail" :style="{'background-image': 'url(' + require(`../assets/hotel-${Math.min(index, 3) * 3 + 0}.jpg`) + ')'}" />
+            <div class="thumbnail" :style="{'background-image': 'url(' + require(`../assets/hotel-${Math.min(index, 3) * 3 + 1}.jpg`) + ')'}" />
+            <div class="thumbnail" :style="{'background-image': 'url(' + require(`../assets/hotel-${Math.min(index, 3) * 3 + 2}.jpg`) + ')'}" />
             <div class="data">
               <!-- <h3>{{ place.name }}</h3> -->
               <p v-if="hCombination.hotels.length > 1">

@@ -47,7 +47,7 @@ async function getAllHotels (lat, lng) {
     }
   }
   await new Promise(function (resolve, reject) {
-    async.forEachLimit(a(), 10, function (item, callback) {
+    async.forEachLimit(a(), 20, function (item, callback) {
       pageIndex++
       search(lat, lng, pageIndex)
         .then(function ({results: hotels}){
