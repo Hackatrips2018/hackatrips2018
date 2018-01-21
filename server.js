@@ -5,7 +5,7 @@ const http = require('http')
 
 const socketService = require('./socket-service')
 
-const PORT = 8888
+const PORT = 3000
 
 const app = express()
 app.use(expressDomain)
