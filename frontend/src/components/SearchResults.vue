@@ -132,13 +132,17 @@ export default {
 .multi-column-container {
   display: flex;
   flex-direction: row;
-  width: 1030px;
+  width: 1035px;
   justify-content: space-between;
   transition: transform 300ms;
 }
 
 .multi-column-container--second-column {
-  transform: translateX(-510px)
+  transform: translateX(-525px)
+}
+
+.multi-column-container--second-column > *:not(:last-child) {
+  margin-right: 15px;
 }
 
 .results .results__header {
