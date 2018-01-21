@@ -64,6 +64,7 @@
                 <br /><em>Total price: {{ hCombination.hotels.reduce((p, h) => p + h.lowestRate, 0) }} €.</em>
                 <fa-icon
                   v-for="star in getFullStarsCount(hCombination)"
+                  :key="star"
                   icon="star"
                   fixed-width
                   class="star"
@@ -71,6 +72,7 @@
                 />
                 <fa-icon
                   v-for="star in getHalfStarsCount(hCombination)"
+                  :key="star"
                   icon="star"
                   fixed-width
                   class="star"

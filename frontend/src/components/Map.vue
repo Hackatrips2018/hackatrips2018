@@ -32,12 +32,13 @@
         :geojson="highlightedHotelCombination.geojson"
         :options="highlightedHotelCombinationOptions"
       />
-      <!-- <v-marker
-        v-if="showHotelCombinations"
-        v-for="marker in hotelCombinations"
-        :lat-lng="marker.coordinates"
+      <v-marker
+        v-if="showHotelCombinations && highlightedHotelCombination"
+        v-for="hotel in highlightedHotelCombination.hotels"
+        :key="hotel.id"
+        :lat-lng="getHotelLatLng(hotel)"
         :icon="hotelIcon"
-      /> -->
+      />
     </v-map>
   </div>
 </template>
@@ -54,7 +55,6 @@ export default {
   data () {
     return {
       zoom: 13,
-      // center: [40.415363, -3.707398],
       url: 'https://api.mapbox.com/styles/v1/mapbox/streets-v8/tiles/{z}/{x}/{y}?access_token=pk.eyJ1Ijoic3Vtb2xhcmkiLCJhIjoiY2pjbmdpZDdlMHNwODJxcGc1azVlZ3ZnNiJ9.TXbnXB1ubggQ6Qy-jBvyDA',
       attribution: 'Imagery © <a href="http://mapbox.com">Mapbox</a>',
       // url: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
@@ -172,6 +172,9 @@ export default {
     },
     unhighlightPoiCluster (event, poiCluster) {
       this.$store.dispatch('UNHIGHLIGHT_POI_CLUSTER', poiCluster)
+    },
+    getHotelLatLng (hotel) {
+      return L.latLng(hotel.latitude, hotel.longitude)
     }
   }
 }
