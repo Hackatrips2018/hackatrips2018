@@ -28,7 +28,7 @@ async function main (hotels, price) {
               [
                 [
                   triplet[0].longitude,
-                  triplet[1].latitude
+                  triplet[0].latitude
                 ],
                 [
                   triplet[1].longitude,
