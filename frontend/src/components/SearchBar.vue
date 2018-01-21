@@ -179,6 +179,7 @@ export default {
       this.$store.dispatch('UPDATE_DESIRED_END_DATE', newDate)
     },
     handleSearch () {
+      this.$store.dispatch('SET_MAP_ZOOM', 13)
       this.$store.dispatch('SEARCH_POIS')
     }
   }
