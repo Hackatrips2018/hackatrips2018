@@ -2,20 +2,19 @@ const socketIO = require('socket.io')
 const express = require('express')
 const expressDomain = require('express-domain-middleware')
 const http = require('http')
+const path = require('path')
 
 const socketService = require('./socket-service')
+const staticFolder = path.join(__dirname, './frontend/dist')
 
 const PORT = 3000
 
 const app = express()
 app.use(expressDomain)
+app.use(express.static(staticFolder))
 
-app.get('/', function (req, res, next) {
-  res.sendStatus(200)
-})
-
-app.get('/back', function (req, res, next) {
-  res.sendStatus(200)
+app.get('*', function (req, res) {
+  res.sendFile('index.html', { root: staticFolder })
 })
 
 const server = http.createServer(app)

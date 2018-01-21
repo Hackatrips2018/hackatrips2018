@@ -2,6 +2,7 @@ const fs = require('fs-extra')
 const kdbush = require('kdbush')
 const geodist = require('geodist')
 const N_PEOPLE = 9
+const _ = require('lodash')
 
 module.exports = main
 process.on('unhandledRejection', function (err) {
@@ -15,7 +16,11 @@ async function main (hotels, price) {
     const hotel = hotels[i]
     const result = closest(index, hotel.latitude, hotel.longitude)
     const {ranking: value, hotels: triplet} = scoring(hotels, price, result, i)
+<<<<<<< 49ef39002a3a4f0d40e2052eab94597ee409265e
     recommendations.push({value, hotels: triplet, id: i, geojson: {
+=======
+    recommendations.push({scoring: value, hotels: triplet, geojson: {
+>>>>>>> Make unique hotels
       "type": "FeatureCollection",
       "features": [
         {
@@ -54,8 +59,10 @@ async function main (hotels, price) {
     }*/
   }
 
-  recommendations.sort((r1, r2) => r2.value - r1.value)
-  return recommendations.slice(0, 3)
+  recommendations.sort((r1, r2) => r2.scoring - r1.scoring)
+  const uniqueRecommendations = _.sortedUniqBy(recommendations, r => r.scoring)
+
+  return uniqueRecommendations.slice(0, 3)
 }
 
 function scoring (allHotels, objectivePrice, indices, index) {
