@@ -65,9 +65,9 @@ const mutations = {
     state.hotelCombinations = null
   },
 
-  MOVE_TO_HOTEL_SELECTION_STEP (state, { hotelCombinations }) {
+  MOVE_TO_HOTEL_SELECTION_STEP (state, { hotelCombination }) {
     state.step = POSSIBLE_STEPS.hotelSelection
-    state.hotelCombinations = hotelCombinations
+    state.hotelCombinations = [hotelCombination]
   },
 
   SET_HIGHLIGHTED_POI_CLUSTER (state, { poiCluster }) {
@@ -95,11 +95,7 @@ const mutations = {
   },
 
   ADD_HOTEL_COMBINATION (state, { hotelCombination }) {
-    if (!state.hotelCombinations) {
-      state.hotelCombinations = [hotelCombination]
-    } else {
-      state.hotelCombinations.push(hotelCombination)
-    }
+    state.hotelCombinations.push(hotelCombination)
   }
 
 }
@@ -184,7 +180,11 @@ const actions = {
   },
 
   PROCESS_FETCHED_HOTEL ({ commit }, hotelCombination) {
-    commit('ADD_HOTEL_COMBINATION', { hotelCombination })
+    if (state.step !== POSSIBLE_STEPS.hotelSelection) {
+      commit('MOVE_TO_HOTEL_SELECTION_STEP', { hotelCombination })
+    } else {
+      commit('ADD_HOTEL_COMBINATION', { hotelCombination })
+    }
   },
 
   PROCESS_FINISHED_FETCHING_HOTELS ({ commit }) {
