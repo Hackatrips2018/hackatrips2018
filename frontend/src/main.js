@@ -17,6 +17,7 @@ Vue.component('v-tilelayer', Vue2Leaflet.TileLayer)
 Vue.component('v-icondefault', Vue2Leaflet.IconDefault)
 Vue.component('v-marker', Vue2Leaflet.Marker)
 Vue.component('v-circle', Vue2Leaflet.LCircle)
+Vue.component('v-geojson-layer', Vue2Leaflet.GeoJSON)
 Vue.component('fa-icon', FontAwesomeIcon)
 
 Vue.config.productionTip = false

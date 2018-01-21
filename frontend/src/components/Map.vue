@@ -24,6 +24,11 @@
         :lat-lng="marker.coordinates"
         :icon="highlightedClusterPoisIcon"
       />
+      <v-geojson-layer
+        v-if="showHotelCombinations && highlightedHotelCombination"
+        :geojson="highlightedHotelCombination.geojson"
+        :options="highlightedHotelCombinationOptions"
+      />
       <!-- <v-marker
         v-if="showHotelCombinations"
         v-for="marker in hotelCombinations"
@@ -121,6 +126,22 @@ export default {
         })
       } else {
         return []
+      }
+    },
+    highlightedHotelCombination () {
+      return this.$store.state.highlightedHotelCombination
+    },
+    highlightedHotelCombinationOptions () {
+      return {
+        style: function () {
+          return {
+            weight: 2,
+            color: 'green',
+            opacity: 1,
+            fillColor: 'red',
+            fillOpacity: 1
+          }
+        }
       }
     },
     poisNearHighlightedHotelCombination () {
